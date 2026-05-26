@@ -81,12 +81,10 @@
                             <strong>Port:</strong>
                             {{ project.container_port }}
                         </p>
-
-                        <a href="#"
-                           class="btn btn-success">
-                            Deploy
-                        </a>
-
+		        <a href="{% url 'deploy_project' project.id %}"
+   class="btn btn-success">
+    Deploy
+</a>
                     </div>
 
                 </div>
