@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>DeployFlow</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+
+        body {
+            background: linear-gradient(to right, #0f172a, #111827);
+            min-height: 100vh;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        .hero-section {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar-custom {
+            padding-top: 25px;
+        }
+
+        .logo {
+            font-size: 48px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .hero-card {
+            background-color: #1f2937;
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0px 10px 30px rgba(0,0,0,0.4);
+        }
+
+        .hero-title {
+            font-size: 48px;
+            font-weight: bold;
+        }
+
+        .hero-text {
+            font-size: 20px;
+            color: #d1d5db;
+        }
+
+        .feature-box {
+            background-color: #111827;
+            border: 1px solid #374151;
+            border-radius: 15px;
+            padding: 20px;
+            height: 100%;
+        }
+
+        .btn-custom {
+            padding: 10px 25px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container hero-section">
+
+    <!-- NAVBAR -->
+
+    <div class="d-flex justify-content-between align-items-center navbar-custom">
+
+        <div class="logo">
+            DeployFlow
+        </div>
+
+        <div class="d-flex gap-3">
+
+            <a href="{% url 'login' %}"
+               class="btn btn-outline-light btn-custom">
+                Login
+            </a>
+
+            <a href="{% url 'signup' %}"
+               class="btn btn-primary btn-custom">
+                Sign Up
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- HERO -->
+
+    <div class="row flex-grow-1 align-items-center">
+
+        <div class="col-lg-7">
+
+            <div class="hero-card">
+
+                <h1 class="hero-title mb-4">
+                    Mini DevOps Deployment Platform
+                </h1>
+
+                <p class="hero-text mb-4">
+                    Deploy Dockerized applications using Jenkins automation,
+                    monitoring, GitHub integration, and one-click deployments.
+                </p>
+
+                <div class="d-flex gap-3">
+
+                    <a href="{% url 'signup' %}"
+                       class="btn btn-primary btn-lg btn-custom">
+                        Get Started
+                    </a>
+
+                    <a href="{% url 'login' %}"
+                       class="btn btn-outline-light btn-lg btn-custom">
+                        Login
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- FEATURES -->
+
+        <div class="col-lg-5 mt-4 mt-lg-0">
+
+            <div class="row g-4">
+
+                <div class="col-12">
+
+                    <div class="feature-box">
+
+                        <h4>Docker Deployments</h4>
+
+                        <p>
+                            Automatically build and run Docker containers
+                            directly from GitHub repositories.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="col-12">
+
+                    <div class="feature-box">
+
+                        <h4>CI/CD Automation</h4>
+
+                        <p>
+                            Trigger Jenkins pipelines and automate deployments
+                            on every GitHub push.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="col-12">
+
+                    <div class="feature-box">
+
+                        <h4>Monitoring Dashboard</h4>
+
+                        <p>
+                            Track deployments, container status, logs,
+                            CPU usage, and RAM usage in real time.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
