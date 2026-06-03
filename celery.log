@@ -304,3 +304,6 @@ django.core.exceptions.FieldError: Unknown field(s) (container_port) specified f
 2026-06-03 10:15:52,211 - INFO - Celery file initialized
 2026-06-03 17:15:47,854 - INFO - Celery file initialized
 2026-06-03 17:16:36,153 - INFO - Celery file initialized
+2026-06-03 17:20:10,875 - INFO - Celery file initialized
+2026-06-03 17:20:23,656 - INFO - Celery file initialized
+2026-06-03 17:26:47,421 - INFO - Celery file initialized
