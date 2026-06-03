@@ -6,6 +6,7 @@ class Project(models.Model):
 
     STATUS_CHOICES = [
         ('NOT_DEPLOYED', 'Not Deployed'),
+        ('QUEUED', 'Queued'),
         ('DEPLOYING', 'Deploying'),
         ('RUNNING', 'Running'),
         ('FAILED', 'Failed'),
@@ -16,7 +17,9 @@ class Project(models.Model):
         on_delete=models.CASCADE
     )
 
-    name = models.CharField(max_length=100)
+    name = models.CharField(
+        max_length=100
+    )
 
     github_url = models.URLField()
 
@@ -25,11 +28,36 @@ class Project(models.Model):
         default='main'
     )
 
-    container_port = models.IntegerField(
-        default=8000
+    route_name = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True,
+        unique=True
     )
 
     deployed_url = models.URLField(
+        blank=True,
+        null=True
+    )
+
+    host_port = models.IntegerField(
+        blank=True,
+        null=True
+    )
+
+    container_name = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True
+    )
+
+    image_name = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True
+    )
+
+    logs = models.TextField(
         blank=True,
         null=True
     )

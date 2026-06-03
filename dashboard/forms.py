@@ -17,6 +17,5 @@ class ProjectForm(forms.ModelForm):
         fields = [
             'name',
             'github_url',
-            'branch',
-            'container_port'
+            'branch'
         ]
