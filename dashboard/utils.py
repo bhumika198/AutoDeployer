@@ -3,16 +3,28 @@ import re
 import socket
 
 
-def get_next_available_port(start_port=8001, end_port=9000):
+from .models import Project
 
-    for port in range(start_port, end_port):
 
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+def get_next_available_port():
 
-            if s.connect_ex(("127.0.0.1", port)) != 0:
-                return port
+    START_PORT = 8100
 
-    raise Exception("No available ports found")
+    used_ports = set(
+        Project.objects.exclude(
+            host_port__isnull=True
+        ).values_list(
+            "host_port",
+            flat=True
+        )
+    )
+
+    port = START_PORT
+
+    while port in used_ports:
+        port += 1
+
+    return port
 
 
 def detect_container_ports(project_path):
