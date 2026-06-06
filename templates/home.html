@@ -1,193 +1,475 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>AutoDeployr</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>DeployFlow</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
 
-    <style>
+:root{
+    --g1:#0b3d2e;
+    --g2:#145c41;
+    --g3:#1f6f50;
+    --mint:#7ee0b6;
+}
 
-        body {
-            background: linear-gradient(to right, #0f172a, #111827);
-            min-height: 100vh;
-            color: white;
-            font-family: Arial, sans-serif;
-        }
+/* ================= BASE ================= */
+body{
+    font-family:'Inter',sans-serif;
+    background:#ffffff;
+    overflow-x:hidden;
+}
 
-        .hero-section {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+/* ================= NAVBAR ================= */
+.navbar{
+    background:linear-gradient(90deg,var(--g1) 70%,#ffffff 30%);
+    border-bottom:1px solid #eaeaea;
+}
 
-        .navbar-custom {
-            padding-top: 25px;
-        }
+.navbar-brand{
+    color:white!important;
+    font-weight:800;
+    letter-spacing:0.5px;
+}
 
-        .logo {
-            font-size: 48px;
-            font-weight: bold;
-            color: white;
-        }
+/* ================= BUTTONS ================= */
+.btn-green{
+    background:linear-gradient(135deg,var(--g1),var(--g2));
+    color:white;
+    border-radius:12px;
+    padding:10px 18px;
+    font-weight:600;
+    transition:0.3s;
+    box-shadow:0 6px 18px rgba(11,61,46,0.2);
+}
 
-        .hero-card {
-            background-color: #1f2937;
-            border-radius: 20px;
-            padding: 50px;
-            box-shadow: 0px 10px 30px rgba(0,0,0,0.4);
-        }
+.btn-green:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 28px rgba(11,61,46,0.35);
+}
 
-        .hero-title {
-            font-size: 48px;
-            font-weight: bold;
-        }
+.btn-outline-green{
+    border:2px solid var(--g1);
+    color:var(--g1);
+    border-radius:12px;
+    font-weight:600;
+}
 
-        .hero-text {
-            font-size: 20px;
-            color: #d1d5db;
-        }
+.btn-outline-green:hover{
+    background:var(--g1);
+    color:white;
+}
 
-        .feature-box {
-            background-color: #111827;
-            border: 1px solid #374151;
-            border-radius: 15px;
-            padding: 20px;
-            height: 100%;
-        }
+/* ================= HERO ================= */
+.hero{
+    position:relative;
+    padding:110px 20px;
+    text-align:center;
+    background:radial-gradient(circle at top,#ffffff 40%,#eaf7f0 100%);
+    overflow:hidden;
+}
 
-        .btn-custom {
-            padding: 10px 25px;
-            border-radius: 10px;
-            font-weight: 600;
-        }
+.hero::before,
+.hero::after{
+    content:"";
+    position:absolute;
+    width:520px;
+    height:520px;
+    border-radius:50%;
+    animation:float 12s infinite ease-in-out;
+}
 
-    </style>
+.hero::before{
+    background:rgba(20,92,65,0.12);
+    top:-160px;
+    left:-160px;
+}
+
+.hero::after{
+    background:rgba(126,224,182,0.12);
+    bottom:-160px;
+    right:-160px;
+    animation-delay:3s;
+}
+
+@keyframes float{
+    0%,100%{transform:translateY(0) scale(1);}
+    50%{transform:translateY(40px) scale(1.1);}
+}
+
+.hero h1{
+    font-size:3.2rem;
+    font-weight:800;
+}
+
+.hero p{
+    max-width:750px;
+    margin:15px auto;
+    color:#555;
+}
+
+/* ================= FEATURES ================= */
+.feature-card{
+    border:1px solid #eee;
+    border-radius:18px;
+    padding:28px;
+    background:white;
+    transition:0.4s;
+    position:relative;
+    overflow:hidden;
+}
+
+.feature-card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 20px 45px rgba(0,0,0,0.08);
+}
+
+.feature-icon{
+    font-size:32px;
+    color:var(--g1);
+    animation:iconFloat 3s infinite ease-in-out;
+}
+
+@keyframes iconFloat{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-6px);}
+}
+
+/* ================= PIPELINE (YOUR STYLE IMPROVED) ================= */
+.pipeline{
+    background:linear-gradient(135deg,var(--g1) 0%,var(--g2) 50%,#ffffff 120%);
+    color:white;
+    padding:75px 20px;
+    border-radius:30px;
+    margin-top:60px;
+    overflow:hidden;
+    position:relative;
+}
+
+/* moving glow animation */
+.pipeline::before{
+    content:"";
+    position:absolute;
+    width:300%;
+    height:300%;
+    background:radial-gradient(circle,rgba(255,255,255,0.10) 0%,transparent 60%);
+    animation:moveGlow 10s linear infinite;
+}
+
+@keyframes moveGlow{
+    0%{transform:translateX(-30%) translateY(-20%);}
+    100%{transform:translateX(30%) translateY(20%);}
+}
+
+.pipeline-step{
+    padding:15px 18px;
+    border-radius:12px;
+    background:rgba(255,255,255,0.12);
+    backdrop-filter:blur(10px);
+    margin:8px;
+    transition:0.3s;
+    font-weight:600;
+}
+
+.pipeline-step:hover{
+    transform:scale(1.08);
+    background:rgba(255,255,255,0.2);
+}
+
+/* animated arrows */
+.arrow{
+    animation:bounce 1.5s infinite;
+}
+
+@keyframes bounce{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-6px);}
+}
+
+/* ================= FEATURES SECTION (IMPROVED ANIMATION) ================= */
+.features-title{
+    font-weight:800;
+    font-size:2.4rem;
+}
+
+.feature-card::before{
+    content:"";
+    position:absolute;
+    width:200%;
+    height:200%;
+    background:radial-gradient(circle,rgba(11,61,46,0.08),transparent 60%);
+    top:-50%;
+    left:-50%;
+    transform:scale(0);
+    transition:0.5s;
+}
+
+.feature-card:hover::before{
+    transform:scale(1);
+}
+
+/* ================= COMPARISON ================= */
+.compare{
+    margin-top:80px;
+    padding:80px 20px;
+    border-radius:30px;
+    background:linear-gradient(135deg,#f6fff9,#ffffff);
+    position:relative;
+    overflow:hidden;
+}
+
+.compare::before{
+    content:"";
+    position:absolute;
+    width:500px;
+    height:500px;
+    background:rgba(20,92,65,0.08);
+    border-radius:50%;
+    top:-120px;
+    right:-120px;
+    animation:float 10s infinite;
+}
+
+.compare-card{
+    border-radius:18px;
+    padding:30px;
+    height:100%;
+    transition:0.3s;
+}
+
+.compare-card:hover{
+    transform:translateY(-6px);
+}
+
+.manual{
+    background:linear-gradient(135deg,#fff5f5,#ffffff);
+    border-left:5px solid #e74c3c;
+}
+
+.auto{
+    background:linear-gradient(135deg,#f1fff6,#ffffff);
+    border-left:5px solid var(--g1);
+}
+
+/* ================= PROPOSED ================= */
+.proposed{
+    margin-top:80px;
+    padding:90px 20px;
+    border-radius:30px;
+    background:linear-gradient(135deg,var(--g1),var(--g2),var(--g3));
+    color:white;
+    position:relative;
+    overflow:hidden;
+}
+
+.proposed::before{
+    content:"";
+    position:absolute;
+    width:600px;
+    height:600px;
+    background:rgba(255,255,255,0.08);
+    border-radius:50%;
+    animation:float 12s infinite;
+}
+
+.proposed-box{
+    background:rgba(255,255,255,0.12);
+    padding:28px;
+    border-radius:18px;
+    backdrop-filter:blur(12px);
+    transition:0.3s;
+}
+
+.proposed-box:hover{
+    transform:translateY(-6px);
+    background:rgba(255,255,255,0.18);
+}
+
+/* ================= FOOTER ================= */
+.footer{
+    text-align:center;
+    padding:30px;
+    border-top:1px solid #eee;
+    color:#777;
+    margin-top:70px;
+}
+
+</style>
 </head>
 
 <body>
 
-<div class="container hero-section">
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg px-4 py-3">
+    <a class="navbar-brand">AutoDeployr</a>
 
-    <!-- NAVBAR -->
+    <div class="ms-auto d-flex gap-2">
+        <a href="{% url 'login' %}" class="btn btn-light">Login</a>
+        <a href="{% url 'signup' %}" class="btn btn-green">Sign Up</a>
+    </div>
+</nav>
 
-    <div class="d-flex justify-content-between align-items-center navbar-custom">
+<!-- HERO -->
+<section class="hero">
+    <h1>Deploy Apps in Seconds with Docker Automation</h1>
+    <p>
+        AutoDeployr automates your full pipeline — GitHub → Docker → Local Build → Celery Tasks → Nginx → Live Deployment.
+    </p>
 
-        <div class="logo">
-            AutoDeployr
+    <div class="mt-4 d-flex justify-content-center gap-3 flex-wrap">
+        <a href="{% url 'signup' %}" class="btn btn-green">Get Started</a>
+        <a href="{% url 'login' %}" class="btn btn-outline-green">Login</a>
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section class="container py-5 text-center">
+
+    <div class="mb-5">
+        <h2 class="features-title">Everything You Need</h2>
+        <p class="text-muted">A complete Docker-based deployment automation system</p>
+    </div>
+
+    <div class="row g-4">
+
+        <div class="col-md-4">
+            <div class="feature-card">
+                <div class="feature-icon">🐳</div>
+                <h5>Docker Engine</h5>
+                <p class="text-muted">Each app is containerized for consistent deployment.</p>
+            </div>
         </div>
 
-        <div class="d-flex gap-3">
+        <div class="col-md-4">
+            <div class="feature-card">
+                <div class="feature-icon">⚙️</div>
+                <h5>Python Orchestration</h5>
+                <p class="text-muted">Custom Python backend manages full lifecycle automation.</p>
+            </div>
+        </div>
 
-            <a href="{% url 'login' %}"
-               class="btn btn-outline-light btn-custom">
-                Login
-            </a>
-
-            <a href="{% url 'signup' %}"
-               class="btn btn-primary btn-custom">
-                Sign Up
-            </a>
-
+        <div class="col-md-4">
+            <div class="feature-card">
+                <div class="feature-icon">📡</div>
+                <h5>Celery + Nginx</h5>
+                <p class="text-muted">Async tasks + reverse proxy for production deployment.</p>
+            </div>
         </div>
 
     </div>
+</section>
 
-    <!-- HERO -->
+<!-- PIPELINE -->
+<section class="container pipeline text-center">
 
-    <div class="row flex-grow-1 align-items-center">
+    <h2 class="mb-4">Live Deployment Pipeline</h2>
 
-        <div class="col-lg-7">
+    <div class="d-flex justify-content-center flex-wrap align-items-center">
 
-            <div class="hero-card">
+        <div class="pipeline-step">AutoDeployr Platform</div>
+        <div class="arrow">➡️</div>
 
-                <h1 class="hero-title mb-4">
-                    Mini DevOps Deployment Platform
-                </h1>
+        <div class="pipeline-step">Add Project</div>
+        <div class="arrow">➡️</div>
 
-                <p class="hero-text mb-4">
-                    Deploy Dockerized applications using Jenkins automation,
-                    monitoring, GitHub integration, and one-click deployments.
-                </p>
+        <div class="pipeline-step">GitHub Clone</div>
+        <div class="arrow">➡️</div>
 
-                <div class="d-flex gap-3">
+        <div class="pipeline-step">Docker Build & Run</div>
+        <div class="arrow">➡️</div>
 
-                    <a href="{% url 'signup' %}"
-                       class="btn btn-primary btn-lg btn-custom">
-                        Get Started
-                    </a>
+        <div class="pipeline-step">Celery Tasks</div>
+        <div class="arrow">➡️</div>
 
-                    <a href="{% url 'login' %}"
-                       class="btn btn-outline-light btn-lg btn-custom">
-                        Login
-                    </a>
+        <div class="pipeline-step">Nginx Live App 🚀</div>
 
-                </div>
+    </div>
+</section>
 
+<!-- COMPARISON -->
+<section class="container compare text-center">
+
+    <h2 style="font-weight:800;">Manual vs AutoDeployr</h2>
+    <p class="text-muted mb-5">From hours of setup → to seconds of deployment</p>
+
+    <div class="row g-4">
+
+        <div class="col-md-6">
+            <div class="compare-card manual">
+                <h4>Manual Deployment ❌</h4>
+                <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=800"
+                     class="img-fluid rounded-3 mb-3">
+                <ul class="text-start">
+                    <li>Server setup & configuration</li>
+                    <li>Install dependencies manually</li>
+                    <li>Docker setup complexity</li>
+                    <li>Nginx configuration errors</li>
+                    <li>Time-consuming debugging</li>
+                    <li>30–60 minutes per deploy</li>
+                </ul>
             </div>
-
         </div>
 
-        <!-- FEATURES -->
-
-        <div class="col-lg-5 mt-4 mt-lg-0">
-
-            <div class="row g-4">
-
-                <div class="col-12">
-
-                    <div class="feature-box">
-
-                        <h4>Docker Deployments</h4>
-
-                        <p>
-                            Automatically build and run Docker containers
-                            directly from GitHub repositories.
-                        </p>
-
-                    </div>
-
-                </div>
-
-                <div class="col-12">
-
-                    <div class="feature-box">
-
-                        <h4>CI/CD Automation</h4>
-
-                        <p>
-                            Trigger Jenkins pipelines and automate deployments
-                            on every GitHub push.
-                        </p>
-
-                    </div>
-
-                </div>
-
-                <div class="col-12">
-
-                    <div class="feature-box">
-
-                        <h4>Monitoring Dashboard</h4>
-
-                        <p>
-                            Track deployments, container status, logs,
-                            CPU usage, and RAM usage in real time.
-                        </p>
-
-                    </div>
-
-                </div>
-
+        <div class="col-md-6">
+            <div class="compare-card auto">
+                <h4>AutoDeployr System ✅</h4>
+                <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800"
+                     class="img-fluid rounded-3 mb-3">
+                <ul class="text-start">
+                    <li>Add project once</li>
+                    <li>Auto Git clone</li>
+                    <li>Docker build & run automation</li>
+                    <li>Celery background processing</li>
+                    <li>Nginx auto routing</li>
+                    <li>Deployment in seconds 🚀</li>
+                </ul>
             </div>
-
         </div>
 
     </div>
+</section>
 
+<!-- PROPOSED SYSTEM -->
+<section class="container proposed text-center">
+
+    <h2>Proposed System Architecture</h2>
+    <p class="mb-5">
+        A scalable Python + Docker-based deployment system designed for automation-first infrastructure.
+    </p>
+
+    <div class="row g-4">
+
+        <div class="col-md-4">
+            <div class="proposed-box">
+                <h5>Frontend Layer</h5>
+                <p>Django dashboard for project and deployment control.</p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="proposed-box">
+                <h5>Execution Layer</h5>
+                <p>Python engine triggers Docker builds and manages workflow.</p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="proposed-box">
+                <h5>Infrastructure Layer</h5>
+                <p>Docker + Celery + Nginx for scalable production deployment.</p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- FOOTER -->
+<div class="footer">
+    © 2026 AutoDeployr — Docker-first Automated Deployment Platform
 </div>
 
 </body>
