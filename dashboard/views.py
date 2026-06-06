@@ -7,6 +7,8 @@ import subprocess
 from django.shortcuts import get_object_or_404
 from .utils import get_next_available_port
 
+from django.http import JsonResponse
+
 def home(request):
     return render(request, 'home.html')
 
@@ -74,10 +76,29 @@ from .utils import get_next_available_port
 def deploy_project(request, project_id):
 
     project = get_object_or_404(Project, id=project_id, user=request.user)
-
+    project.deployment_logs = ""
+    project.deployment_progress = 0
+    project.logs = ""
+    project.save()  
     deploy_project_task.delay(project.id)
 
     project.status = "QUEUED"
     project.save()
 
     return redirect("dashboard")
+
+@login_required
+def deployment_status(request, project_id):
+
+    project = get_object_or_404(
+        Project,
+        id=project_id,
+        user=request.user
+    )
+
+    return JsonResponse({
+        "status": project.status,
+        "progress": project.deployment_progress,
+        "logs": project.deployment_logs,
+        "url": project.deployed_url,
+    })

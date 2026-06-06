@@ -17,6 +17,17 @@ from .nginx_utils import (
 
 logger = logging.getLogger(__name__)
 
+def update_deployment(project, message, progress=None):
+
+    logger.info(message)
+
+    project.deployment_logs += f"{message}\n"
+
+    if progress is not None:
+        project.deployment_progress = progress
+
+    project.save()
+
 
 @shared_task
 def deploy_project_task(project_id):
@@ -38,7 +49,16 @@ def deploy_project_task(project_id):
         # -----------------------------
         logger.info(f"[STATUS UPDATE] QUEUED → DEPLOYING (Project {project.id})")
         project.status = "DEPLOYING"
+        project.deployment_logs = ""
+        project.deployment_progress = 0
+        project.logs = ""
         project.save()
+
+        update_deployment(
+            project,
+            "[STATUS] Deployment Started",
+            5
+        )
 
         # -----------------------------
         # SETUP PATHS
@@ -58,7 +78,14 @@ def deploy_project_task(project_id):
         logger.info(f"[GIT] Cloning repo: {project.github_url} (branch: {project.branch})")
 
         clone_result = subprocess.run(
-            ["git", "clone", "-b", project.branch, project.github_url, project_path],
+            [
+                "/usr/bin/git",
+                "clone",
+                "-b",
+                project.branch,
+                project.github_url,
+                project_path
+            ],
             capture_output=True,
             text=True
         )
@@ -67,10 +94,20 @@ def deploy_project_task(project_id):
             logger.error(f"[GIT ERROR] {clone_result.stderr}")
             project.status = "FAILED"
             project.logs = clone_result.stderr
+            project.deployment_logs += (
+                "\n[GIT ERROR]\n" +
+                clone_result.stderr
+            )
             project.save()
             return
 
         logger.info("[GIT] Clone successful")
+
+        update_deployment(
+            project,
+            "[GIT] Repository cloned successfully",
+            20
+        )
 
         # -----------------------------
         # DETECT CONTAINER PORTS
@@ -83,7 +120,11 @@ def deploy_project_task(project_id):
         logger.info(f"[DETECT] Framework: {framework}")
         logger.info(f"[DETECT] Container Port: {container_port}")
         logger.info(f"[DETECT] Secondary Ports: {port_info['secondary_ports']}")
-
+        update_deployment(
+            project,
+            f"[DETECT] Container Port: {container_port}",
+            30
+        )
         # -----------------------------
         # GENERATE ROUTE NAME
         # -----------------------------
@@ -112,32 +153,17 @@ def deploy_project_task(project_id):
 
         # -----------------------------
         # BUILD DOCKER IMAGE
-        # -----------------------------
-        # image_name = f"project_{project.id}"
-        # container_name = f"container_{project.id}"
-
-        # logger.info(f"[DOCKER] Building image: {image_name}")
-
-        # build_result = subprocess.run(
-        #     ["docker", "build", "-t", image_name, project_path],
-        #     capture_output=True,
-        #     text=True
-        # )
-
-        # if build_result.returncode != 0:
-        #     logger.error(f"[DOCKER BUILD ERROR] {build_result.stderr}")
-        #     project.status = "FAILED"
-        #     project.logs = build_result.stderr
-        #     project.save()
-        #     return
-
-        # logger.info("[DOCKER] Image build successful")
+        # -----------------------------      
 
         image_name = f"project_{project.id}"
         container_name = f"container_{project.id}"
 
         logger.info(f"[DOCKER] Building image: {image_name}")
-
+        update_deployment(
+            project,
+            "[DOCKER] Building image",
+            40
+        )
         build_result = subprocess.run(
             ["docker", "build", "-t", image_name, project_path],
             capture_output=True,
@@ -153,11 +179,22 @@ def deploy_project_task(project_id):
 
             project.status = "FAILED"
             project.logs = logs[-8000:]  # avoid DB overflow
+
+            project.deployment_logs += (
+                "\n[DOCKER BUILD FAILED]\n" +
+                logs[-8000:]
+            )
             project.save()
 
             raise Exception(f"Docker build failed:\n{logs}")
 
         logger.info("[DOCKER] Image build successful")
+        update_deployment(
+            project,
+            "[DOCKER] Image build successful",
+            60
+        )
+
         logger.debug(logs)
 
         # -----------------------------
@@ -196,7 +233,12 @@ def deploy_project_task(project_id):
             return
 
         logger.info(f"[DOCKER] Container started: {container_name}")
-
+        update_deployment(
+            project,
+            "[DOCKER] Container started",
+            80
+        )
+        
         # -----------------------------
         # MARK SUCCESS
         # -----------------------------
@@ -219,6 +261,11 @@ def deploy_project_task(project_id):
         # -----------------------------
         # NGINX ROUTING SETUP
         # -----------------------------
+        update_deployment(
+            project,
+            "[NGINX] Configuring routing",
+            90
+        )
         logger.info("[NGINX] Generating reverse proxy config")
 
         try:
@@ -230,6 +277,11 @@ def deploy_project_task(project_id):
             reload_nginx()
 
             logger.info("[NGINX] Routing activated successfully")
+            update_deployment(
+                project,
+                "[SUCCESS] Deployment completed",
+                100
+            )
 
         except Exception as e:
             logger.error(f"[NGINX ERROR] {str(e)}")

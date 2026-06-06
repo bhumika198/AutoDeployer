@@ -7,4 +7,6 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     path('add-project/', views.add_project, name='add_project'),
     path('deploy/<int:project_id>/', views.deploy_project, name='deploy_project'),
+    path('deployment-status/<int:project_id>/',views.deployment_status,name='deployment_status'),
+
 ]

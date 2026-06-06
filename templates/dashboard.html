@@ -3,7 +3,7 @@
 
 <head>
 
-    <title>Dashboard</title>
+    <title>DeployFlow Dashboard</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -35,87 +35,321 @@
 
     {% if projects %}
 
-        <div class="row">
+    <div class="row">
 
-            {% for project in projects %}
+        {% for project in projects %}
 
-            <div class="col-md-4 mb-4">
+        <div class="col-md-6 col-lg-4 mb-4">
 
-                <div class="card bg-secondary h-100">
+            <div class="card bg-secondary h-100">
 
-                    <div class="card-body">
+                <div class="card-body">
 
-                        <h3>{{ project.name }}</h3>
+                    <h3>{{ project.name }}</h3>
 
-                        <p>
-                            <strong>Branch:</strong>
-                            {{ project.branch }}
-                        </p>
+                    <p>
+                        <strong>Branch:</strong>
+                        {{ project.branch }}
+                    </p>
 
-                        <p>
-                            <strong>Status:</strong>
+                    <p>
+                        <strong>Status:</strong>
 
-                            {% if project.status == 'RUNNING' %}
-                                <span class="badge bg-success">
-                                    Running
-                                </span>
+                        {% if project.status == 'RUNNING' %}
+                            <span class="badge bg-success">
+                                Running
+                            </span>
 
-                            {% elif project.status == 'FAILED' %}
-                                <span class="badge bg-danger">
-                                    Failed
-                                </span>
+                        {% elif project.status == 'FAILED' %}
+                            <span class="badge bg-danger">
+                                Failed
+                            </span>
 
-                            {% elif project.status == 'DEPLOYING' %}
-                                <span class="badge bg-warning">
-                                    Deploying
-                                </span>
+                        {% elif project.status == 'DEPLOYING' %}
+                            <span class="badge bg-warning text-dark">
+                                Deploying
+                            </span>
 
-                            {% else %}
-                                <span class="badge bg-secondary">
-                                    Not Deployed
-                                </span>
-                            {% endif %}
-                        </p>
+                        {% elif project.status == 'QUEUED' %}
+                            <span class="badge bg-info text-dark">
+                                Queued
+                            </span>
 
-                        <p>
-                            <strong>Port:</strong>
-                            {{ project.container_port }}
-                        </p>
-		        <a href="{% url 'deploy_project' project.id %}"
-   class="btn btn-success">
-    Deploy
-</a>
-                    </div>
+                        {% else %}
+                            <span class="badge bg-secondary">
+                                Not Deployed
+                            </span>
+                        {% endif %}
+                    </p>
+
+                    {% if project.status == "RUNNING" and project.deployed_url %}
+
+                    <a href="{{ project.deployed_url }}"
+                       target="_blank"
+                       class="btn btn-outline-light btn-sm mb-2">
+
+                        Open Project
+
+                    </a>
+
+                    <br>
+
+                    {% endif %}
+
+                    <button
+                        class="btn btn-success deploy-btn"
+                        data-project-id="{{ project.id }}">
+
+                        Deploy
+
+                    </button>
+
+                    {% if project.status == "DEPLOYING" or project.status == "QUEUED" %}
+
+                    <button
+                        class="btn btn-info view-progress-btn"
+                        data-project-id="{{ project.id }}">
+
+                        View Progress
+
+                    </button>
+
+                    {% endif %}
 
                 </div>
 
             </div>
 
-            {% endfor %}
-
         </div>
+
+        {% endfor %}
+
+    </div>
 
     {% else %}
 
-        <div class="card bg-secondary p-5 text-center">
+    <div class="card bg-secondary p-5 text-center">
 
-            <h3>No Projects Yet</h3>
+        <h3>No Projects Yet</h3>
 
-            <p>
-                Add your first GitHub repository.
-            </p>
+        <p>Add your first GitHub repository.</p>
 
-            <a href="{% url 'add_project' %}"
-               class="btn btn-primary">
-                Add Project
-            </a>
+        <a href="{% url 'add_project' %}"
+           class="btn btn-primary">
 
-        </div>
+            Add Project
+
+        </a>
+
+    </div>
 
     {% endif %}
 
 </div>
 
-</body>
 
+<!-- DEPLOYMENT MODAL -->
+
+<div class="modal fade"
+     id="deploymentModal"
+     tabindex="-1">
+
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+
+        <div class="modal-content bg-dark text-light">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title">
+                    Deployment Progress
+                </h5>
+
+                <button type="button"
+                        class="btn-close btn-close-white"
+                        data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <div class="mb-3">
+
+                    <label class="mb-2">
+                        Progress
+                    </label>
+
+                    <div class="progress">
+
+                        <div id="progressBar"
+                             class="progress-bar progress-bar-striped progress-bar-animated"
+                             style="width:0%">
+
+                            0%
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div id="successBox"
+                     class="alert alert-success d-none">
+
+                    <strong>
+                        Deployment Successful
+                    </strong>
+
+                    <br><br>
+
+                    <a id="projectUrl"
+                       href="#"
+                       target="_blank"
+                       class="btn btn-success">
+
+                        Open Project
+
+                    </a>
+
+                </div>
+
+                <div id="errorBox"
+                     class="alert alert-danger d-none">
+
+                    Deployment Failed
+
+                </div>
+
+                <h6>
+                    Deployment Logs
+                </h6>
+
+                <div id="logsBox"
+                     class="bg-secondary text-light rounded p-3"
+                     style="
+                        height:300px;
+                        overflow-y:auto;
+                        white-space:pre-wrap;
+                        font-family:monospace;
+                        font-size:12px;
+                     ">
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+
+let deploymentInterval = null;
+
+const modal = new bootstrap.Modal(
+    document.getElementById('deploymentModal')
+);
+
+function watchDeployment(projectId) {
+
+    modal.show();
+
+    clearInterval(deploymentInterval);
+
+    deploymentInterval = setInterval(() => {
+
+        fetch(`/deployment-status/${projectId}/`)
+        .then(response => response.json())
+        .then(data => {
+
+            const progressBar =
+                document.getElementById("progressBar");
+
+            progressBar.style.width =
+                data.progress + "%";
+
+            progressBar.innerText =
+                data.progress + "%";
+
+            document.getElementById("logsBox").innerText =
+                data.logs || "";
+
+            const logsBox =
+                document.getElementById("logsBox");
+
+            logsBox.scrollTop =
+                logsBox.scrollHeight;
+
+            if (data.status === "RUNNING") {
+
+                document
+                    .getElementById("successBox")
+                    .classList.remove("d-none");
+
+                document
+                    .getElementById("projectUrl")
+                    .href = data.url;
+
+                clearInterval(deploymentInterval);
+
+                setTimeout(() => {
+                    location.reload();
+                }, 3000);
+            }
+
+            if (data.status === "FAILED") {
+
+                document
+                    .getElementById("errorBox")
+                    .classList.remove("d-none");
+
+                clearInterval(deploymentInterval);
+            }
+
+        });
+
+    }, 2000);
+}
+
+document
+.querySelectorAll(".view-progress-btn")
+.forEach(btn => {
+
+    btn.addEventListener("click", function() {
+
+        watchDeployment(
+            this.dataset.projectId
+        );
+
+    });
+
+});
+
+document
+.querySelectorAll(".deploy-btn")
+.forEach(btn => {
+
+    btn.addEventListener("click", function() {
+
+        const projectId =
+            this.dataset.projectId;
+
+        fetch(`/deploy/${projectId}/`)
+        .then(() => {
+
+            watchDeployment(projectId);
+
+        });
+
+    });
+
+});
+
+</script>
+
+</body>
 </html>

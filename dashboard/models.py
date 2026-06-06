@@ -67,6 +67,15 @@ class Project(models.Model):
         choices=STATUS_CHOICES,
         default='NOT_DEPLOYED'
     )
+    
+    deployment_logs = models.TextField(
+    blank=True,
+    default=""
+    )
+ 
+    deployment_progress = models.IntegerField(
+    default=0
+    )
 
     created_at = models.DateTimeField(
         auto_now_add=True
