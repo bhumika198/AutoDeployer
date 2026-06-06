@@ -15,6 +15,8 @@ from .nginx_utils import (
     reload_nginx
 )
 
+DOCKER_BIN = "/usr/bin/docker"
+
 logger = logging.getLogger(__name__)
 
 def update_deployment(project, message, progress=None):
@@ -157,6 +159,7 @@ def deploy_project_task(project_id):
 
         image_name = f"project_{project.id}"
         container_name = f"container_{project.id}"
+        DOCKER_RESTART_POLICY = "unless-stopped"
 
         logger.info(f"[DOCKER] Building image: {image_name}")
         update_deployment(
@@ -165,7 +168,7 @@ def deploy_project_task(project_id):
             40
         )
         build_result = subprocess.run(
-            ["docker", "build", "-t", image_name, project_path],
+            [DOCKER_BIN, "build", "-t", image_name, project_path],
             capture_output=True,
             text=True
         )
@@ -211,9 +214,15 @@ def deploy_project_task(project_id):
         logger.info("[DOCKER] Starting container")
 
         run_cmd = [
-            "docker", "run", "-d",
-            "--name", container_name,
-            "-p", f"{project.host_port}:{container_port}",
+            "docker",
+            "run",
+            "-d",
+            "--restart",
+            DOCKER_RESTART_POLICY,
+            "--name",
+            container_name,
+            "-p",
+            f"{project.host_port}:{container_port}",
             image_name
         ]
 
@@ -289,7 +298,126 @@ def deploy_project_task(project_id):
             project.save()
 
     except Exception as e:
-        logger.error(f"[EXCEPTION] {str(e)}")
+        logger.exception("[DEPLOYMENT FAILED]")
+
         project.status = "FAILED"
         project.logs = str(e)
+
+        project.deployment_logs += (
+            f"\n[ERROR]\n{str(e)}\n"
+        )
+
         project.save()
+
+        raise
+
+
+
+
+@shared_task
+def delete_project_task(project_id):
+
+    import os
+    import shutil
+    import subprocess
+
+    try:
+        project = Project.objects.get(id=project_id)
+
+        container_name = project.container_name
+        image_name = project.image_name
+
+        deployment_path = (
+            f"/root/Documents/AutoDeployer/deployments/project_{project.id}"
+        )
+
+        nginx_config = (
+            f"/etc/nginx/conf.d/{project.route_name}.conf"
+        )
+
+        logger.info(
+            f"[DELETE] Starting cleanup for project {project.id}"
+        )
+
+        # -----------------------------
+        # STOP CONTAINER
+        # -----------------------------
+        if container_name:
+
+            logger.info(
+                f"[DELETE] Stopping container {container_name}"
+            )
+
+            subprocess.run(
+                ["/usr/bin/docker", "stop", container_name],
+                capture_output=True,
+                text=True
+            )
+
+            logger.info(
+                f"[DELETE] Removing container {container_name}"
+            )
+
+            subprocess.run(
+                ["/usr/bin/docker", "rm", container_name],
+                capture_output=True,
+                text=True
+            )
+
+        # -----------------------------
+        # REMOVE IMAGE
+        # -----------------------------
+        if image_name:
+
+            logger.info(
+                f"[DELETE] Removing image {image_name}"
+            )
+
+            subprocess.run(
+                ["/usr/bin/docker", "rmi", "-f", image_name],
+                capture_output=True,
+                text=True
+            )
+
+        # -----------------------------
+        # REMOVE DEPLOYMENT FOLDER
+        # -----------------------------
+        if os.path.exists(deployment_path):
+
+            logger.info(
+                f"[DELETE] Removing deployment folder"
+            )
+
+            shutil.rmtree(deployment_path)
+
+        # -----------------------------
+        # REMOVE NGINX CONFIG
+        # -----------------------------
+        if os.path.exists(nginx_config):
+
+            logger.info(
+                f"[DELETE] Removing nginx config"
+            )
+
+            os.remove(nginx_config)
+
+            test_nginx()
+            reload_nginx()
+
+        logger.info(
+            f"[DELETE] Removing database record"
+        )
+
+        project.delete()
+
+        logger.info(
+            f"[DELETE SUCCESS] Project {project_id}"
+        )
+
+    except Exception as e:
+
+        logger.exception(
+            f"[DELETE FAILED] Project {project_id}"
+        )
+
+        raise

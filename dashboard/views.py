@@ -9,6 +9,12 @@ from .utils import get_next_available_port
 
 from django.http import JsonResponse
 
+
+from .tasks import (
+    deploy_project_task,
+    delete_project_task
+)
+
 def home(request):
     return render(request, 'home.html')
 
@@ -83,7 +89,10 @@ def deploy_project(request, project_id):
     deploy_project_task.delay(project.id)
 
     project.status = "QUEUED"
+    project.deployment_progress = 0
+    project.deployment_logs = ""
     project.save()
+    
 
     return redirect("dashboard")
 
@@ -102,3 +111,16 @@ def deployment_status(request, project_id):
         "logs": project.deployment_logs,
         "url": project.deployed_url,
     })
+
+@login_required
+def delete_project(request, project_id):
+
+    project = get_object_or_404(
+        Project,
+        id=project_id,
+        user=request.user
+    )
+
+    delete_project_task.delay(project.id)
+
+    return redirect("dashboard")

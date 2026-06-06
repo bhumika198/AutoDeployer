@@ -5,28 +5,195 @@
 
     <title>DeployFlow Dashboard</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <style>
+        /* --- Core Layout & Background Fixes --- */
+        body {
+            min-height: 100vh;
+            color: #1e293b; /* Adjusted body text to dark slate for readability on the 60% white zone */
+            position: relative;
+            background-color: #ffffff;
+        }
+
+        /* Fixed background element layer to prevent visual breaking during scroll */
+        .dashboard-bg-matrix {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .bg-white-zone {
+            flex: 6;
+            background-color:#e0eed6;
+        }
+
+        .bg-green-zone {
+            flex: 4;
+            background: linear-gradient(135deg, #0b4228 0%, #041f12 100%);
+        }
+
+        /* Ensure your container content floats smoothly on top */
+        .container {
+            position: relative;
+            z-index: 10;
+        }
+
+        /* --- Your Original Component Styling (Untouched) --- */
+        .project-card {
+            background: #ffffff;
+            border: none;
+            border-radius: 18px;
+            transition: .25s;
+            color: #1e293b; /* Clean contrast inside cards */
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .terminal {
+            background: #0a0a0a;
+            color: #41ff74;
+            font-family: monospace;
+            font-size: 12px;
+            border-radius: 10px;
+            padding: 15px;
+            max-height: 300px;
+            overflow: auto;
+            white-space: pre-wrap;
+        }
+
+        .error-terminal {
+            background: #1a0000;
+            color: #ff7373;
+            font-family: monospace;
+            font-size: 12px;
+            border-radius: 10px;
+            padding: 15px;
+            max-height: 300px;
+            overflow: auto;
+            white-space: pre-wrap;
+        }
+
+        .modal-content {
+            background: #102417;
+            color: white;
+        }
+
+        .deployment-link {
+            word-break: break-all;
+        }
+
+        .dashboard-title {
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #0b4228; /* Shifted from dark red to theme matching deep green */
+        }
+
+        /* --- Animated DevOps Pipeline Assets --- */
+        .pipeline-svg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes pipelineFlow {
+            to {
+                stroke-dashoffset: -60;
+            }
+        }
+
+        .flow-pulse {
+            stroke-dasharray: 12, 48;
+            animation: pipelineFlow 2.5s linear infinite;
+        }
+        
+        .flow-pulse-fast {
+            stroke-dasharray: 8, 32;
+            animation: pipelineFlow 1.6s linear infinite;
+        }
+
+        .flow-pulse-slow {
+            stroke-dasharray: 15, 60;
+            animation: pipelineFlow 4s linear infinite;
+        }
+
+        .glowing-node {
+            transform-origin: center;
+            transition: fill 0.3s ease;
+        }
+    </style>
 
 </head>
 
-<body class="bg-dark text-light">
+<body>
 
-<div class="container mt-5">
+<div class="dashboard-bg-matrix">
+    <div class="bg-white-zone"></div>
+    <div class="bg-green-zone"></div>
+</div>
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
+<svg class="pipeline-svg" viewBox="0 0 1920 1080" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M 0 250 L 400 250 L 550 400 L 1152 400" fill="none" stroke="rgba(11, 66, 40, 0.08)" stroke-width="3" />
+    <path d="M 0 520 L 300 520 L 450 670 L 850 670 L 980 540 L 1152 540" fill="none" stroke="rgba(11, 66, 40, 0.08)" stroke-width="3" />
+    <path d="M 0 850 L 500 850 L 700 650 L 1152 650" fill="none" stroke="rgba(11, 66, 40, 0.08)" stroke-width="3" />
+    
+    <path d="M 0 250 L 400 250 L 550 400 L 1152 400" fill="none" stroke="#0b4228" stroke-width="4" class="flow-pulse" stroke-opacity="0.85" />
+    <path d="M 0 520 L 300 520 L 450 670 L 850 670 L 980 540 L 1152 540" fill="none" stroke="#155d3b" stroke-width="4" class="flow-pulse-slow" stroke-opacity="0.65" />
+    <path d="M 0 850 L 500 850 L 700 650 L 1152 650" fill="none" stroke="#0b4228" stroke-width="4" class="flow-pulse-fast" stroke-opacity="0.85" />
 
-        <h1>DeployFlow Dashboard</h1>
+    <rect x="390" y="240" width="20" height="20" rx="4" fill="#0b4228" class="glowing-node" id="node-1" />
+    <rect x="290" y="510" width="20" height="20" rx="4" fill="#155d3b" class="glowing-node" id="node-2" />
+    <rect x="490" y="840" width="20" height="20" rx="4" fill="#0b4228" class="glowing-node" id="node-3" />
+
+    <path d="M 800 350 L 1152 350 L 1300 500 L 1920 500" fill="none" stroke="#0b4228" stroke-width="5" class="flow-pulse-fast" />
+    <path d="M 950 780 L 1152 780 L 1320 610 L 1550 610 L 1680 740 L 1920 740" fill="none" stroke="#155d3b" stroke-width="4" class="flow-pulse" />
+
+    <path d="M 1152 200 L 1450 200 L 1580 330 L 1920 330" fill="none" stroke="rgba(255, 255, 255, 0.12)" stroke-width="3" />
+    <path d="M 1152 400 L 1380 400 L 1500 280 L 1920 280" fill="none" stroke="rgba(255, 255, 255, 0.12)" stroke-width="3" />
+    <path d="M 1152 900 L 1600 900 L 1720 780 L 1920 780" fill="none" stroke="rgba(255, 255, 255, 0.12)" stroke-width="3" />
+
+    <path d="M 1152 200 L 1450 200 L 1580 330 L 1920 330" fill="none" stroke="#ffffff" stroke-width="4" class="flow-pulse-slow" stroke-opacity="0.5" />
+    <path d="M 1152 400 L 1380 400 L 1500 280 L 1920 280" fill="none" stroke="#22c55e" stroke-width="3" class="flow-pulse" stroke-opacity="0.7" />
+    <path d="M 1152 900 L 1600 900 L 1720 780 L 1920 780" fill="none" stroke="#ffffff" stroke-width="4" class="flow-pulse-fast" stroke-opacity="0.4" />
+
+    <rect x="1435" y="185" width="30" height="30" rx="4" fill="#ffffff" fill-opacity="0.1" stroke="#ffffff" stroke-width="2" class="glowing-node" id="node-target-1" />
+    <rect x="1365" y="385" width="30" height="30" rx="4" fill="#155d3b" stroke="#22c55e" stroke-width="2" class="glowing-node" id="node-target-2" />
+    <rect x="1585" y="885" width="30" height="30" rx="4" fill="#ffffff" fill-opacity="0.2" class="glowing-node" id="node-target-3" />
+</svg>
+<div class="container py-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-5">
+
+        <h1 class="dashboard-title">
+            AutoDeployr Dashboard
+        </h1>
 
         <div>
 
             <a href="{% url 'add_project' %}"
-               class="btn btn-primary">
+               class="btn btn-success">
+
                 Add Project
+
             </a>
 
             <a href="{% url 'logout' %}"
                class="btn btn-danger">
+
                 Logout
+
             </a>
 
         </div>
@@ -41,18 +208,22 @@
 
         <div class="col-md-6 col-lg-4 mb-4">
 
-            <div class="card bg-secondary h-100">
+            <div class="card project-card h-100">
 
                 <div class="card-body">
 
-                    <h3>{{ project.name }}</h3>
+                    <h4>{{ project.name }}</h4>
 
                     <p>
+
                         <strong>Branch:</strong>
+
                         {{ project.branch }}
+
                     </p>
 
                     <p>
+
                         <strong>Status:</strong>
 
                         {% if project.status == 'RUNNING' %}
@@ -80,41 +251,72 @@
                                 Not Deployed
                             </span>
                         {% endif %}
+
                     </p>
 
-                    {% if project.status == "RUNNING" and project.deployed_url %}
+                    {% if project.status == 'RUNNING' %}
 
-                    <a href="{{ project.deployed_url }}"
-                       target="_blank"
-                       class="btn btn-outline-light btn-sm mb-2">
+                    <div class="mb-3">
 
-                        Open Project
+                        <a href="{{ project.deployed_url }}"
+                           target="_blank"
+                           class="btn btn-outline-dark btn-sm">
 
-                    </a>
+                            Open Project
 
-                    <br>
+                        </a>
+
+
+                    </div>
+
+                    {% endif %}
+
+                    {% if project.status == 'NOT_DEPLOYED' %}
+
+                        <a href="{% url 'deploy_project' project.id %}"
+                           class="btn btn-success">
+
+                            Deploy
+
+                        </a>
+
+                    {% elif project.status == 'QUEUED' or project.status == 'DEPLOYING' %}
+
+                        <button class="btn btn-secondary"
+                                disabled>
+
+                            Deployment Running...
+
+                        </button>
+
+                    {% else %}
+
+                        <a href="{% url 'deploy_project' project.id %}"
+                           class="btn btn-warning">
+
+                            Redeploy
+
+                        </a>
 
                     {% endif %}
 
                     <button
-                        class="btn btn-success deploy-btn"
-                        data-project-id="{{ project.id }}">
+                        class="btn btn-outline-dark ms-2"
+                        onclick="openDeploymentModal({{ project.id }})">
 
-                        Deploy
-
-                    </button>
-
-                    {% if project.status == "DEPLOYING" or project.status == "QUEUED" %}
-
-                    <button
-                        class="btn btn-info view-progress-btn"
-                        data-project-id="{{ project.id }}">
-
-                        View Progress
+                        View Deployment
 
                     </button>
 
-                    {% endif %}
+                     <a
+                            href="{% url 'delete_project' project.id %}"
+                            class="btn btn-danger"
+                            onclick="return confirm(
+                                'Delete this project permanently?\n\nThis will remove:\n\n• Container\n• Docker Image\n• Deployment Files\n• Nginx Config\n• Database Record'
+                            );"
+                        >
+                            Delete Project
+                        </a>
 
                 </div>
 
@@ -126,47 +328,30 @@
 
     </div>
 
-    {% else %}
-
-    <div class="card bg-secondary p-5 text-center">
-
-        <h3>No Projects Yet</h3>
-
-        <p>Add your first GitHub repository.</p>
-
-        <a href="{% url 'add_project' %}"
-           class="btn btn-primary">
-
-            Add Project
-
-        </a>
-
-    </div>
-
     {% endif %}
 
 </div>
-
-
-<!-- DEPLOYMENT MODAL -->
 
 <div class="modal fade"
      id="deploymentModal"
      tabindex="-1">
 
-    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
 
-        <div class="modal-content bg-dark text-light">
+        <div class="modal-content">
 
             <div class="modal-header">
 
                 <h5 class="modal-title">
+
                     Deployment Progress
+
                 </h5>
 
-                <button type="button"
-                        class="btn-close btn-close-white"
-                        data-bs-dismiss="modal">
+                <button
+                    type="button"
+                    class="btn-close btn-close-white"
+                    data-bs-dismiss="modal">
                 </button>
 
             </div>
@@ -175,15 +360,11 @@
 
                 <div class="mb-3">
 
-                    <label class="mb-2">
-                        Progress
-                    </label>
-
-                    <div class="progress">
+                    <div class="progress"
+                         style="height:25px;">
 
                         <div id="progressBar"
-                             class="progress-bar progress-bar-striped progress-bar-animated"
-                             style="width:0%">
+                             class="progress-bar progress-bar-striped progress-bar-animated">
 
                             0%
 
@@ -193,30 +374,10 @@
 
                 </div>
 
-                <div id="successBox"
-                     class="alert alert-success d-none">
+                <div id="deploymentStatus"
+                     class="alert alert-info">
 
-                    <strong>
-                        Deployment Successful
-                    </strong>
-
-                    <br><br>
-
-                    <a id="projectUrl"
-                       href="#"
-                       target="_blank"
-                       class="btn btn-success">
-
-                        Open Project
-
-                    </a>
-
-                </div>
-
-                <div id="errorBox"
-                     class="alert alert-danger d-none">
-
-                    Deployment Failed
+                    Waiting...
 
                 </div>
 
@@ -224,15 +385,35 @@
                     Deployment Logs
                 </h6>
 
-                <div id="logsBox"
-                     class="bg-secondary text-light rounded p-3"
-                     style="
-                        height:300px;
-                        overflow-y:auto;
-                        white-space:pre-wrap;
-                        font-family:monospace;
-                        font-size:12px;
-                     ">
+                <div id="deploymentLogs"
+                     class="terminal">
+
+                </div>
+
+                <div id="deploymentUrlSection"
+                     style="display:none;"
+                     class="mt-4">
+
+                    <div class="alert alert-success">
+
+                        <strong>
+
+                            Deployment Successful
+
+                        </strong>
+
+                        <br><br>
+
+                        <a id="deploymentUrl"
+                           target="_blank"
+                           class="btn btn-success">
+
+                            Open Project
+
+                        </a>
+
+                    </div>
+
                 </div>
 
             </div>
@@ -243,112 +424,86 @@
 
 </div>
 
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
 
-let deploymentInterval = null;
+let deploymentModal =
+    new bootstrap.Modal(
+        document.getElementById('deploymentModal')
+    );
 
-const modal = new bootstrap.Modal(
-    document.getElementById('deploymentModal')
-);
+let pollInterval = null;
 
-function watchDeployment(projectId) {
+function openDeploymentModal(projectId){
 
-    modal.show();
+    deploymentModal.show();
 
-    clearInterval(deploymentInterval);
+    loadDeployment(projectId);
 
-    deploymentInterval = setInterval(() => {
+    if(pollInterval){
+        clearInterval(pollInterval);
+    }
 
-        fetch(`/deployment-status/${projectId}/`)
-        .then(response => response.json())
-        .then(data => {
+    pollInterval = setInterval(function(){
 
-            const progressBar =
-                document.getElementById("progressBar");
+        loadDeployment(projectId);
 
-            progressBar.style.width =
-                data.progress + "%";
-
-            progressBar.innerText =
-                data.progress + "%";
-
-            document.getElementById("logsBox").innerText =
-                data.logs || "";
-
-            const logsBox =
-                document.getElementById("logsBox");
-
-            logsBox.scrollTop =
-                logsBox.scrollHeight;
-
-            if (data.status === "RUNNING") {
-
-                document
-                    .getElementById("successBox")
-                    .classList.remove("d-none");
-
-                document
-                    .getElementById("projectUrl")
-                    .href = data.url;
-
-                clearInterval(deploymentInterval);
-
-                setTimeout(() => {
-                    location.reload();
-                }, 3000);
-            }
-
-            if (data.status === "FAILED") {
-
-                document
-                    .getElementById("errorBox")
-                    .classList.remove("d-none");
-
-                clearInterval(deploymentInterval);
-            }
-
-        });
-
-    }, 2000);
+    },2000);
 }
 
-document
-.querySelectorAll(".view-progress-btn")
-.forEach(btn => {
+function loadDeployment(projectId){
 
-    btn.addEventListener("click", function() {
+    fetch(`/deployment-status/${projectId}/`)
+    .then(response => response.json())
+    .then(data => {
 
-        watchDeployment(
-            this.dataset.projectId
-        );
+        document.getElementById("progressBar").style.width =
+            data.progress + "%";
+
+        document.getElementById("progressBar").innerHTML =
+            data.progress + "%";
+
+        document.getElementById("deploymentLogs").innerText =
+            data.logs;
+
+        document.getElementById("deploymentStatus").innerHTML =
+            data.status;
+
+        if(data.status === "RUNNING"){
+
+            document
+                .getElementById("deploymentUrlSection")
+                .style.display = "block";
+
+            document
+                .getElementById("deploymentUrl")
+                .href = data.url;
+
+            clearInterval(pollInterval);
+        }
+
+        if(data.status === "FAILED"){
+            clearInterval(pollInterval);
+        }
 
     });
 
+}
+
+// Background Activity Node Telemetry Flash Engine
+document.addEventListener('DOMContentLoaded', () => {
+    const bgNodes = ['node-1', 'node-2', 'node-3', 'node-target-1', 'node-target-2', 'node-target-3'];
+    setInterval(() => {
+        const targetId = bgNodes[Math.floor(Math.random() * bgNodes.length)];
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+            const originalColor = targetElement.getAttribute('fill');
+            targetElement.style.fill = '#22c55e';
+            setTimeout(() => { targetElement.style.fill = originalColor; }, 400);
+        }
+    }, 1400);
 });
-
-document
-.querySelectorAll(".deploy-btn")
-.forEach(btn => {
-
-    btn.addEventListener("click", function() {
-
-        const projectId =
-            this.dataset.projectId;
-
-        fetch(`/deploy/${projectId}/`)
-        .then(() => {
-
-            watchDeployment(projectId);
-
-        });
-
-    });
-
-});
-
 </script>
 
 </body>

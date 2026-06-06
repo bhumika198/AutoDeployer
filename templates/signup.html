@@ -1,4 +1,184 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Signup | AutoDeployr</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+    --g1:#0b3d2e;
+    --g2:#145c41;
+    --mint:#7ee0b6;
+}
+
+body{
+    font-family:'Inter',sans-serif;
+    background: radial-gradient(circle at top,#ffffff 40%, #eaf7f0 100%);
+    height:100vh;
+    overflow:hidden;
+}
+.navbar{
+    background:linear-gradient(90deg,var(--g1) 70%,#ffffff 30%);
+    border-bottom:1px solid #eaeaea;
+}
+
+.navbar-brand{
+    color:white!important;
+    font-weight:800;
+    letter-spacing:0.5px;
+}
+/* background animation */
+.bg::before,
+.bg::after{
+    content:"";
+    position:absolute;
+    width:520px;
+    height:520px;
+    margin-top:60px;
+    border-radius:50%;
+    z-index:0;
+    animation:float 10s infinite ease-in-out;
+}
+
+.bg::before{
+    background:rgba(20,92,65,0.12);
+    top:-140px;
+    left:-140px;
+}
+
+.bg::after{
+    background:rgba(126,224,182,0.12);
+    bottom:-140px;
+    right:-140px;
+}
+
+@keyframes float{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(40px);}
+}
+
+/* card */
+.signup-card{
+    width:100%;
+    max-width:450px;
+    padding:40px;
+    border-radius:20px;
+    background:white;
+    box-shadow:0 25px 60px rgba(0,0,0,0.1);
+    position:relative;
+    z-index:2;
+    animation:fadeUp 0.8s ease;
+}
+
+@keyframes fadeUp{
+    from{opacity:0; transform:translateY(30px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+.title{
+    font-weight:800;
+    color:var(--g1);
+}
+
+.subtitle{
+    color:#666;
+    font-size:14px;
+    margin-bottom:20px;
+}
+
+.form-control{
+    border-radius:12px;
+    padding:12px;
+}
+
+.form-control:focus{
+    border-color:var(--g2);
+    box-shadow:0 0 0 0.2rem rgba(20,92,65,0.15);
+}
+
+.btn-green{
+    background:linear-gradient(135deg,var(--g1),var(--g2));
+    color:white;
+    border-radius:12px;
+    padding:12px;
+    font-weight:600;
+    transition:0.3s;
+}
+
+.btn-green:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 25px rgba(11,61,46,0.3);
+}
+
+.link{
+    color:var(--g2);
+    font-weight:600;
+    text-decoration:none;
+}
+
+.link:hover{
+    text-decoration:underline;
+}
+
+</style>
+</head>
+
+<body>
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg px-4 py-3">
+    <a href="#" class="navbar-brand">AutoDeployr</a>
+
+    <div class="ms-auto d-flex gap-2">
+        <a href="{% url 'login' %}" class="btn btn-green">Login</a>
+        <a href="{% url 'signup' %}" class="btn btn-green">Sign Up</a>
+    </div>
+</nav>
+<div class="bg d-flex justify-content-center align-items-center" style="height:90vh;">
+
+    <div class="signup-card">
+
+        <h2 class="title">Create Account</h2>
+        <p class="subtitle">Start deploying with AutoDeployr</p>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <input type="text" name="username" class="form-control" placeholder="Username" required>
+            </div>
+
+            <div class="mb-3">
+                <input type="email" name="email" class="form-control" placeholder="Email" required>
+            </div>
+
+            <div class="mb-3">
+                <input type="password" name="password1" class="form-control" placeholder="Password" required>
+            </div>
+
+            <div class="mb-3">
+                <input type="password" name="password2" class="form-control" placeholder="Confirm Password" required>
+            </div>
+
+            <button type="submit" class="btn btn-green w-100">Create Account</button>
+        </form>
+
+        <div class="text-center mt-3">
+            <small>Already have an account? <a href="{% url 'login' %}" class="link">Login</a></small>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
+
+<!-- <!DOCTYPE html>
 <html>
 
 <head>
@@ -32,4 +212,4 @@
 </div>
 
 </body>
-</html>
+</html> -->
