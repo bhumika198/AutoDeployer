@@ -6,7 +6,8 @@ import os
 import subprocess
 from django.shortcuts import get_object_or_404
 from .utils import get_next_available_port
-
+from .tasks import deploy_project_task
+from .utils import get_next_available_port
 from django.http import JsonResponse
 
 from .monitor_utils import (
@@ -26,6 +27,21 @@ from .tasks import (
 def home(request):
     return render(request, 'home.html')
 
+@login_required
+def dashboard(request):
+
+    projects = Project.objects.filter(
+        user=request.user
+    ).exclude(
+    status="DELETING"
+        )
+
+    return render(
+        request,
+        'dashboard.html',
+        {'projects': projects}
+    )
+
 def signup_view(request):
 
     if request.method == 'POST':
@@ -42,25 +58,11 @@ def signup_view(request):
     return render(request, 'signup.html', {'form': form})
 
 @login_required
-def dashboard(request):
-
-    projects = Project.objects.filter(
-        user=request.user
-    ).exclude(
-    status="DELETING"
-        )
-
-    return render(
-        request,
-        'dashboard.html',
-        {'projects': projects}
-    )
-
-@login_required
 def add_project(request):
+    print("VIEW CALLED")
 
     if request.method == 'POST':
-
+        print("POST RECEIVED:", request.POST)
         form = ProjectForm(request.POST)
 
         if form.is_valid():
@@ -83,10 +85,6 @@ def add_project(request):
         'add_project.html',
         {'form': form}
     )
-
-from .tasks import deploy_project_task
-from .utils import get_next_available_port
-
 
 @login_required
 def deploy_project(request, project_id):

@@ -68,7 +68,7 @@ def reload_nginx():
     logger.info("[NGINX] Reloading nginx")
 
     result = subprocess.run(
-        ["systemctl", "reload", "/usr/sbin/nginx"],
+        ["/usr/sbin/nginx", "-s","reload"],
         capture_output=True,
         text=True
     )

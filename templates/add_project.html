@@ -1,4 +1,4 @@
-{% include 'header.html' %}
+<!-- {% include 'header.html' %}
 <!DOCTYPE html>
 <html>
 
@@ -48,4 +48,541 @@
 
 </body>
 
+</html> -->
+
+{% include 'header.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>AutoDeployr - Create Project</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+    --green-dark:#0b3d2e;
+    --green:#145c41;
+    --green-light:#1f6f50;
+    --mint:#7ee0b6;
+    --bg:#f7fbf8;
+}
+
+*{
+    font-family:'Inter',sans-serif;
+}
+
+body{
+    background:var(--bg);
+    min-height:100vh;
+    overflow-x:hidden;
+    position:relative;
+}
+
+/* ========================= */
+/* BACKGROUND ANIMATION */
+/* ========================= */
+
+.bg-orb{
+    position:fixed;
+    border-radius:50%;
+    filter:blur(80px);
+    z-index:-1;
+}
+
+.orb1{
+    width:450px;
+    height:450px;
+    background:rgba(20,92,65,.10);
+    top:-100px;
+    left:-120px;
+    animation:float1 15s infinite ease-in-out;
+}
+
+.orb2{
+    width:350px;
+    height:350px;
+    background:rgba(126,224,182,.15);
+    right:-80px;
+    top:120px;
+    animation:float2 12s infinite ease-in-out;
+}
+
+.orb3{
+    width:500px;
+    height:500px;
+    background:rgba(11,61,46,.08);
+    bottom:-200px;
+    left:30%;
+    animation:float3 18s infinite ease-in-out;
+}
+
+@keyframes float1{
+    50%{transform:translateY(60px) translateX(30px);}
+}
+
+@keyframes float2{
+    50%{transform:translateY(-50px);}
+}
+
+@keyframes float3{
+    50%{transform:translateX(100px);}
+}
+
+/* ========================= */
+/* TOP NAVBAR */
+/* ========================= */
+
+.top-navbar{
+
+    height:72px;
+
+    background:white;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 30px;
+
+    box-shadow:0 2px 15px rgba(0,0,0,.05);
+
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.logo-section{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo-box{
+    width:42px;
+    height:42px;
+    border-radius:12px;
+
+    background:
+    linear-gradient(
+    135deg,
+    var(--green-dark),
+    var(--green));
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:white;
+    font-size:20px;
+}
+
+.logo-title{
+    font-weight:800;
+    font-size:1.2rem;
+    color:var(--green-dark);
+}
+
+.user-section{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.user-badge{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+
+    background:
+    linear-gradient(
+    135deg,
+    var(--green-dark),
+    var(--green));
+
+    color:white;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.logout-btn{
+    text-decoration:none;
+    color:#dc3545;
+    font-weight:600;
+}
+
+/* ========================= */
+/* MAIN LAYOUT */
+/* ========================= */
+
+.main-layout{
+    display:flex;
+    min-height:calc(100vh - 72px);
+}
+
+/* ========================= */
+/* SIDEBAR */
+/* ========================= */
+
+.sidebar{
+
+    width:260px;
+
+    background:
+    linear-gradient(
+    180deg,
+    var(--green-dark),
+    var(--green));
+
+    padding:30px 20px;
+
+    color:white;
+}
+
+.sidebar a{
+
+    display:block;
+
+    color:white;
+
+    text-decoration:none;
+
+    padding:14px 18px;
+
+    margin-bottom:10px;
+
+    border-radius:14px;
+
+    transition:.3s;
+}
+
+.sidebar a:hover{
+    background:rgba(255,255,255,.12);
+    transform:translateX(6px);
+}
+
+.sidebar .active{
+    background:white;
+    color:var(--green-dark);
+    font-weight:700;
+}
+
+/* ========================= */
+/* CONTENT */
+/* ========================= */
+
+.content{
+
+    flex:1;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    padding:50px;
+}
+
+/* ========================= */
+/* FORM CARD */
+/* ========================= */
+
+.project-card{
+
+    width:100%;
+    max-width:800px;
+
+    background:white;
+
+    border-radius:28px;
+
+    padding:45px;
+
+    box-shadow:
+    0 25px 60px rgba(0,0,0,.08);
+
+    animation:slideUp .7s ease;
+}
+
+@keyframes slideUp{
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.project-card h2{
+    color:var(--green-dark);
+    font-weight:800;
+}
+
+.project-card p{
+    color:#666;
+}
+
+/* ========================= */
+/* INPUTS */
+/* ========================= */
+
+.form-label{
+    font-weight:600;
+    color:#333;
+}
+
+.custom-input{
+
+    border-radius:14px;
+
+    padding:14px;
+
+    border:1px solid #dce7e0;
+
+    transition:.3s;
+}
+
+.custom-input:focus{
+
+    border-color:var(--green);
+
+    box-shadow:
+    0 0 0 4px rgba(20,92,65,.10);
+}
+
+/* ========================= */
+/* SAVE BUTTON */
+/* ========================= */
+
+.btn-save{
+
+    background:
+    linear-gradient(
+    135deg,
+    var(--green-dark),
+    var(--green));
+
+    color:white;
+
+    border:none;
+
+    padding:14px 24px;
+
+    border-radius:14px;
+
+    font-weight:600;
+
+    transition:.3s;
+}
+
+.btn-save:hover{
+    transform:translateY(-3px);
+}
+
+.btn-cancel{
+
+    background:#f4f4f4;
+
+    padding:14px 24px;
+
+    border-radius:14px;
+
+    text-decoration:none;
+
+    color:#555;
+}
+
+/* ========================= */
+/* HELP ICON */
+/* ========================= */
+
+.help-icon{
+
+    display:inline-flex;
+
+    width:22px;
+    height:22px;
+
+    border-radius:50%;
+
+    align-items:center;
+    justify-content:center;
+
+    background:#e8f5ee;
+
+    color:var(--green-dark);
+
+    cursor:pointer;
+
+    font-size:12px;
+
+    margin-left:8px;
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="bg-orb orb1"></div>
+<div class="bg-orb orb2"></div>
+<div class="bg-orb orb3"></div>
+    <!-- CONTENT -->
+
+    <main class="content">
+
+        <div class="project-card">
+
+            <h2>Create New Project</h2>
+
+            <p>
+                Connect a Docker-ready GitHub repository and deploy instantly.
+            </p>
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <!-- Project Name -->
+
+                <div class="mb-4">
+
+                    <label class="form-label">
+
+                        Project Name
+
+                        <span
+                          class="help-icon"
+                          data-bs-toggle="popover"
+                          data-bs-trigger="hover focus"
+                          data-bs-placement="right"
+                          data-bs-content="Only alphabets and underscore (_) are allowed."
+                        >
+                          ?
+                        </span>
+
+                    </label>
+
+                    <input
+                        type="text"
+                        name="name"
+                        class="form-control custom-input"
+                        placeholder="my_project"
+                        pattern="[A-Za-z_]+"
+                        required>
+
+                </div>
+
+                <!-- Github -->
+
+                <div class="mb-4">
+
+                    <label class="form-label">
+
+                        GitHub Repository URL
+
+                        <span
+                          class="help-icon"
+                          data-bs-toggle="popover"
+                          data-bs-trigger="hover focus"
+                          data-bs-placement="right"
+                          data-bs-content="Repository must be public and URL should end with .git"
+                        >
+                          ?
+                        </span>
+
+                    </label>
+
+                    <input
+                        type="url"
+                        name="github_url"
+                        class="form-control custom-input"
+                        placeholder="https://github.com/user/repo.git"
+                        required>
+
+                </div>
+
+                <!-- Branch -->
+
+                <div class="mb-4">
+
+                    <label class="form-label">
+
+                        Branch Name
+
+                        <span
+                          class="help-icon"
+                          data-bs-toggle="popover"
+                          data-bs-trigger="hover focus"
+                          data-bs-placement="right"
+                          data-bs-content="Branch that contains the Dockerfile and application source code."
+                        >
+                          ?
+                        </span>
+
+                    </label>
+
+                    <input
+                        type="text"
+                        name="branch"
+                        class="form-control custom-input"
+                        placeholder="main/master"
+                        required>
+
+                </div>
+
+                <!-- Dockerfile Info -->
+
+                <div class="alert alert-success">
+
+                    ✓ Repository must contain a valid Dockerfile in the root directory.
+
+                </div>
+
+                <div class="d-flex gap-3 mt-4">
+
+                    <button
+                        type="submit"
+                        class="btn-save">
+
+                        Save Project
+
+                    </button>
+
+                    <a href="{% url 'dashboard' %}" class="btn-cancel">
+                        Cancel
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </main>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+const popovers =
+document.querySelectorAll('[data-bs-toggle="popover"]');
+
+popovers.forEach(el=>{
+    new bootstrap.Popover(el);
+});
+</script>
+
+</body>
 </html>
