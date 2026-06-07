@@ -208,7 +208,7 @@
 
         <div class="col-md-6 col-lg-4 mb-4">
 
-            <div class="card project-card h-100">
+            <div id="project-card-{{ project.id }}" class="card project-card h-100">
 
                 <div class="card-body">
 
@@ -244,6 +244,11 @@
                         {% elif project.status == 'QUEUED' %}
                             <span class="badge bg-info text-dark">
                                 Queued
+                            </span>
+
+                        {% elif project.status == 'DELETING' %}
+                            <span class="badge bg-danger">
+                                Deleting
                             </span>
 
                         {% else %}
@@ -308,16 +313,17 @@
 
                     </button>
 
-                     <a
-                            href="{% url 'delete_project' project.id %}"
-                            class="btn btn-danger"
-                            onclick="return confirm(
-                                'Delete this project permanently?\n\nThis will remove:\n\n• Container\n• Docker Image\n• Deployment Files\n• Nginx Config\n• Database Record'
-                            );"
-                        >
-                            Delete Project
-                        </a>
+                    <button
+                        class="btn btn-danger"
+                        onclick="openDeleteModal(
+                            {{ project.id }},
+                            '{{ project.name|escapejs }}'
+                        )">
 
+                        Delete Project
+
+                    </button>
+                
                 </div>
 
             </div>
@@ -424,6 +430,144 @@
 
 </div>
 
+<div class="modal fade"
+     id="deleteProjectModal"
+     tabindex="-1">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title">
+
+                    Delete Project
+
+                </h5>
+
+                <button
+                    type="button"
+                    class="btn-close btn-close-white"
+                    data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <!-- CONFIRMATION -->
+
+                <div id="deleteConfirmationContent">
+
+                    <div class="alert alert-danger">
+
+                        <h5>
+
+                            Warning
+
+                        </h5>
+
+                        <p>
+
+                            This action cannot be undone.
+
+                        </p>
+
+                    </div>
+
+                    <p>
+
+                        The following resources will be permanently removed:
+
+                    </p>
+
+                    <ul>
+
+                        <li>Docker Container</li>
+
+                        <li>Docker Image</li>
+
+                        <li>Deployment Repository</li>
+
+                        <li>Nginx Configuration</li>
+
+                        <li>Public Route</li>
+
+                        <li>Deployment Records</li>
+
+                    </ul>
+
+                    <p>
+
+                        Project:
+
+                        <strong id="deleteProjectName"></strong>
+
+                    </p>
+
+                </div>
+
+                <!-- SUCCESS -->
+
+                <div id="deleteSuccessContent"
+                     style="display:none;">
+
+                    <div class="alert alert-warning">
+
+                        <h5>
+
+                            Project Deletion Started
+
+                        </h5>
+
+                        <p class="mb-0">
+
+                            Cleanup has been queued.
+
+                            Docker resources,
+                            deployment files,
+                            nginx configuration,
+                            and database records
+                            are being removed in
+                            the background.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal">
+
+                    Close
+
+                </button>
+
+                <button
+                    type="button"
+                    class="btn btn-danger"
+                    id="confirmDeleteBtn">
+
+                    Delete Project
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
@@ -490,6 +634,125 @@ function loadDeployment(projectId){
     });
 
 }
+// Delete modal JS  start
+let deleteModal =
+    new bootstrap.Modal(
+        document.getElementById(
+            'deleteProjectModal'
+        )
+    );
+
+let deleteProjectId = null;
+let deleteCompleted = false;
+
+function openDeleteModal(
+    projectId,
+    projectName
+){
+
+    deleteProjectId = projectId;
+
+    deleteCompleted = false;
+
+    document.getElementById(
+        "deleteProjectName"
+    ).innerText = projectName;
+
+    document.getElementById(
+        "deleteConfirmationContent"
+    ).style.display = "block";
+
+    document.getElementById(
+        "deleteSuccessContent"
+    ).style.display = "none";
+
+    document.getElementById(
+        "confirmDeleteBtn"
+    ).style.display = "inline-block";
+
+    deleteModal.show();
+}
+
+document
+.getElementById(
+    "confirmDeleteBtn"
+)
+.addEventListener(
+    "click",
+    function(){
+
+        fetch(
+            `/delete-project/${deleteProjectId}/`,
+            {
+                method: "POST",
+
+                headers: {
+                    "X-CSRFToken":
+                        "{{ csrf_token }}"
+                }
+            }
+        )
+        .then(response => response.json())
+        .then(data => {
+
+            deleteCompleted = true;
+
+            document.getElementById(
+                "deleteConfirmationContent"
+            ).style.display = "none";
+
+            document.getElementById(
+                "deleteSuccessContent"
+            ).style.display = "block";
+
+            document.getElementById(
+                "confirmDeleteBtn"
+            ).style.display = "none";
+        });
+
+    }
+);
+
+document
+.getElementById(
+    "deleteProjectModal"
+)
+.addEventListener(
+    "hidden.bs.modal",
+    function(){
+
+        if(deleteCompleted){
+
+            let card =
+                document.getElementById(
+                    `project-card-${deleteProjectId}`
+                );
+
+            if(card){
+
+                card.style.transition =
+                    "all .4s ease";
+
+                card.style.opacity = "0";
+
+                card.style.transform =
+                    "scale(.9)";
+
+                setTimeout(() => {
+
+                    card.remove();
+
+                }, 400);
+            }
+
+            deleteProjectId = null;
+            deleteCompleted = false;
+        }
+    }
+);
+
+
+
 
 // Background Activity Node Telemetry Flash Engine
 document.addEventListener('DOMContentLoaded', () => {

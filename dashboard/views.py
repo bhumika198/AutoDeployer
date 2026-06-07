@@ -38,7 +38,9 @@ def dashboard(request):
 
     projects = Project.objects.filter(
         user=request.user
-    )
+    ).exclude(
+    status="DELETING"
+        )
 
     return render(
         request,
@@ -121,6 +123,12 @@ def delete_project(request, project_id):
         user=request.user
     )
 
+    project.status = "DELETING"
+    project.save()
+
     delete_project_task.delay(project.id)
 
-    return redirect("dashboard")
+    return JsonResponse({
+        "status": "ok",
+        "project_id": project.id
+    })

@@ -530,3 +530,679 @@ IndentationError: expected an indented block after 'if' statement on line 31
 2026-06-06 22:10:27,049 - INFO - Celery file initialized
 2026-06-06 22:13:34,110 - INFO - Celery file initialized
 2026-06-06 22:14:12,499 - INFO - Celery file initialized
+2026-06-07 11:48:16,952 - INFO - Celery file initialized
+2026-06-07 11:48:17,003 - INFO - Celery file initialized
+2026-06-07 11:48:17,056 - INFO - Celery file initialized
+2026-06-07 11:48:26,751 - INFO - Celery file initialized
+2026-06-07 11:56:24,634 - INFO - Celery file initialized
+2026-06-07 11:56:24,656 - INFO - Celery file initialized
+2026-06-07 11:56:24,710 - INFO - Celery file initialized
+2026-06-07 11:56:31,026 - INFO - Celery file initialized
+2026-06-07 12:27:56,965 - INFO - Celery file initialized
+2026-06-07 12:27:57,107 - INFO - Celery file initialized
+2026-06-07 12:27:57,294 - INFO - Celery file initialized
+2026-06-07 12:28:01,909 - INFO - Celery file initialized
+2026-06-07 12:28:02,176 - ERROR - Signal handler <bound method DjangoFixup.on_import_modules of <celery.fixups.django.DjangoFixup object at 0x77dcefd639b0>> raised: IndentationError('unindent does not match any outer indentation level', ('/root/Documents/AutoDeployer/dashboard/tasks.py', 355, 20, '       logger.info(\n', 355, -1))
+Traceback (most recent call last):
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/utils/dispatch/signal.py", line 280, in send
+    response = receiver(signal=self, sender=sender, **named)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/fixups/django.py", line 103, in on_import_modules
+    self.worker_fixup.validate_models()
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/fixups/django.py", line 154, in validate_models
+    run_checks()
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/core/checks/registry.py", line 89, in run_checks
+    new_errors = check(app_configs=app_configs, databases=databases)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/core/checks/urls.py", line 16, in check_url_config
+    return check_resolver(resolver)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/core/checks/urls.py", line 26, in check_resolver
+    return check_method()
+           ^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 541, in check
+    for pattern in self.url_patterns:
+                   ^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 729, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 722, in urlconf_module
+    return import_module(self.urlconf_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/Documents/AutoDeployer/deployflow/urls.py", line 22, in <module>
+    path('', include('dashboard.urls')),
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/urls/conf.py", line 39, in include
+    urlconf_module = import_module(urlconf_module)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/Documents/AutoDeployer/dashboard/urls.py", line 2, in <module>
+    from . import views
+  File "/root/Documents/AutoDeployer/dashboard/views.py", line 13, in <module>
+    from .tasks import (
+  File "/root/Documents/AutoDeployer/dashboard/tasks.py", line 355
+    logger.info(
+                ^
+IndentationError: unindent does not match any outer indentation level
+2026-06-07 12:28:02,187 - ERROR - Signal handler <promise@0x77dcef965f90 --> <bound method Celery._autodiscover_tasks of <Celery deployflow at 0x77dcf02e8f80>>> raised: IndentationError('unindent does not match any outer indentation level', ('/root/Documents/AutoDeployer/dashboard/tasks.py', 355, 20, '       logger.info(\n', 355, -1))
+Traceback (most recent call last):
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/utils/dispatch/signal.py", line 280, in send
+    response = receiver(signal=self, sender=sender, **named)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/vine/promises.py", line 161, in __call__
+    return self.throw()
+           ^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/vine/promises.py", line 158, in __call__
+    retval = fun(*final_args, **final_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/app/base.py", line 827, in _autodiscover_tasks
+    return self._autodiscover_tasks_from_fixups(related_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/app/base.py", line 836, in _autodiscover_tasks_from_fixups
+    return self._autodiscover_tasks_from_names([
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/app/base.py", line 831, in _autodiscover_tasks_from_names
+    return self.loader.autodiscover_tasks(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/loaders/base.py", line 220, in autodiscover_tasks
+    mod.__name__ for mod in autodiscover_tasks(packages or (),
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/loaders/base.py", line 246, in autodiscover_tasks
+    return [find_related_module(pkg, related_name) for pkg in packages]
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/loaders/base.py", line 270, in find_related_module
+    return importlib.import_module(module_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 991, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1129, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1059, in source_to_code
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/Documents/AutoDeployer/dashboard/tasks.py", line 355
+    logger.info(
+                ^
+IndentationError: unindent does not match any outer indentation level
+2026-06-07 12:28:02,983 - INFO - Celery file initialized
+2026-06-07 12:28:03,261 - ERROR - Signal handler <bound method DjangoFixup.on_import_modules of <celery.fixups.django.DjangoFixup object at 0x778e90094140>> raised: IndentationError('unindent does not match any outer indentation level', ('/root/Documents/AutoDeployer/dashboard/tasks.py', 355, 20, '       logger.info(\n', 355, -1))
+Traceback (most recent call last):
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/utils/dispatch/signal.py", line 280, in send
+    response = receiver(signal=self, sender=sender, **named)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/fixups/django.py", line 103, in on_import_modules
+    self.worker_fixup.validate_models()
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/fixups/django.py", line 154, in validate_models
+    run_checks()
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/core/checks/registry.py", line 89, in run_checks
+    new_errors = check(app_configs=app_configs, databases=databases)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/core/checks/urls.py", line 16, in check_url_config
+    return check_resolver(resolver)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/core/checks/urls.py", line 26, in check_resolver
+    return check_method()
+           ^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 541, in check
+    for pattern in self.url_patterns:
+                   ^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 729, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 722, in urlconf_module
+    return import_module(self.urlconf_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/Documents/AutoDeployer/deployflow/urls.py", line 22, in <module>
+    path('', include('dashboard.urls')),
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/urls/conf.py", line 39, in include
+    urlconf_module = import_module(urlconf_module)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/Documents/AutoDeployer/dashboard/urls.py", line 2, in <module>
+    from . import views
+  File "/root/Documents/AutoDeployer/dashboard/views.py", line 13, in <module>
+    from .tasks import (
+  File "/root/Documents/AutoDeployer/dashboard/tasks.py", line 355
+    logger.info(
+                ^
+IndentationError: unindent does not match any outer indentation level
+2026-06-07 12:28:03,267 - ERROR - Signal handler <promise@0x778e9007df90 --> <bound method Celery._autodiscover_tasks of <Celery deployflow at 0x778e9002ac00>>> raised: IndentationError('unindent does not match any outer indentation level', ('/root/Documents/AutoDeployer/dashboard/tasks.py', 355, 20, '       logger.info(\n', 355, -1))
+Traceback (most recent call last):
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/utils/dispatch/signal.py", line 280, in send
+    response = receiver(signal=self, sender=sender, **named)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/vine/promises.py", line 161, in __call__
+    return self.throw()
+           ^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/vine/promises.py", line 158, in __call__
+    retval = fun(*final_args, **final_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/app/base.py", line 827, in _autodiscover_tasks
+    return self._autodiscover_tasks_from_fixups(related_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/app/base.py", line 836, in _autodiscover_tasks_from_fixups
+    return self._autodiscover_tasks_from_names([
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/app/base.py", line 831, in _autodiscover_tasks_from_names
+    return self.loader.autodiscover_tasks(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/loaders/base.py", line 220, in autodiscover_tasks
+    mod.__name__ for mod in autodiscover_tasks(packages or (),
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/loaders/base.py", line 246, in autodiscover_tasks
+    return [find_related_module(pkg, related_name) for pkg in packages]
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/loaders/base.py", line 270, in find_related_module
+    return importlib.import_module(module_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 991, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1129, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1059, in source_to_code
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/Documents/AutoDeployer/dashboard/tasks.py", line 355
+    logger.info(
+                ^
+IndentationError: unindent does not match any outer indentation level
+2026-06-07 12:28:03,982 - INFO - Celery file initialized
+2026-06-07 12:28:04,260 - ERROR - Signal handler <bound method DjangoFixup.on_import_modules of <celery.fixups.django.DjangoFixup object at 0x7b2cb7b48230>> raised: IndentationError('unindent does not match any outer indentation level', ('/root/Documents/AutoDeployer/dashboard/tasks.py', 355, 20, '       logger.info(\n', 355, -1))
+Traceback (most recent call last):
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/utils/dispatch/signal.py", line 280, in send
+    response = receiver(signal=self, sender=sender, **named)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/fixups/django.py", line 103, in on_import_modules
+    self.worker_fixup.validate_models()
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/fixups/django.py", line 154, in validate_models
+    run_checks()
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/core/checks/registry.py", line 89, in run_checks
+    new_errors = check(app_configs=app_configs, databases=databases)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/core/checks/urls.py", line 16, in check_url_config
+    return check_resolver(resolver)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/core/checks/urls.py", line 26, in check_resolver
+    return check_method()
+           ^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 541, in check
+    for pattern in self.url_patterns:
+                   ^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 729, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 722, in urlconf_module
+    return import_module(self.urlconf_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/Documents/AutoDeployer/deployflow/urls.py", line 22, in <module>
+    path('', include('dashboard.urls')),
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/urls/conf.py", line 39, in include
+    urlconf_module = import_module(urlconf_module)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/Documents/AutoDeployer/dashboard/urls.py", line 2, in <module>
+    from . import views
+  File "/root/Documents/AutoDeployer/dashboard/views.py", line 13, in <module>
+    from .tasks import (
+  File "/root/Documents/AutoDeployer/dashboard/tasks.py", line 355
+    logger.info(
+                ^
+IndentationError: unindent does not match any outer indentation level
+2026-06-07 12:28:04,265 - ERROR - Signal handler <promise@0x7b2cb7671f90 --> <bound method Celery._autodiscover_tasks of <Celery deployflow at 0x7b2cb79efe00>>> raised: IndentationError('unindent does not match any outer indentation level', ('/root/Documents/AutoDeployer/dashboard/tasks.py', 355, 20, '       logger.info(\n', 355, -1))
+Traceback (most recent call last):
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/utils/dispatch/signal.py", line 280, in send
+    response = receiver(signal=self, sender=sender, **named)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/vine/promises.py", line 161, in __call__
+    return self.throw()
+           ^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/vine/promises.py", line 158, in __call__
+    retval = fun(*final_args, **final_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/app/base.py", line 827, in _autodiscover_tasks
+    return self._autodiscover_tasks_from_fixups(related_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/app/base.py", line 836, in _autodiscover_tasks_from_fixups
+    return self._autodiscover_tasks_from_names([
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/app/base.py", line 831, in _autodiscover_tasks_from_names
+    return self.loader.autodiscover_tasks(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/loaders/base.py", line 220, in autodiscover_tasks
+    mod.__name__ for mod in autodiscover_tasks(packages or (),
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/loaders/base.py", line 246, in autodiscover_tasks
+    return [find_related_module(pkg, related_name) for pkg in packages]
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/loaders/base.py", line 270, in find_related_module
+    return importlib.import_module(module_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 991, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1129, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1059, in source_to_code
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/Documents/AutoDeployer/dashboard/tasks.py", line 355
+    logger.info(
+                ^
+IndentationError: unindent does not match any outer indentation level
+2026-06-07 12:28:04,975 - INFO - Celery file initialized
+2026-06-07 12:28:05,239 - ERROR - Signal handler <bound method DjangoFixup.on_import_modules of <celery.fixups.django.DjangoFixup object at 0x7f4cfd4902c0>> raised: IndentationError('unindent does not match any outer indentation level', ('/root/Documents/AutoDeployer/dashboard/tasks.py', 355, 20, '       logger.info(\n', 355, -1))
+Traceback (most recent call last):
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/utils/dispatch/signal.py", line 280, in send
+    response = receiver(signal=self, sender=sender, **named)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/fixups/django.py", line 103, in on_import_modules
+    self.worker_fixup.validate_models()
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/fixups/django.py", line 154, in validate_models
+    run_checks()
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/core/checks/registry.py", line 89, in run_checks
+    new_errors = check(app_configs=app_configs, databases=databases)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/core/checks/urls.py", line 16, in check_url_config
+    return check_resolver(resolver)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/core/checks/urls.py", line 26, in check_resolver
+    return check_method()
+           ^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 541, in check
+    for pattern in self.url_patterns:
+                   ^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 729, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 722, in urlconf_module
+    return import_module(self.urlconf_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/Documents/AutoDeployer/deployflow/urls.py", line 22, in <module>
+    path('', include('dashboard.urls')),
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/urls/conf.py", line 39, in include
+    urlconf_module = import_module(urlconf_module)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/Documents/AutoDeployer/dashboard/urls.py", line 2, in <module>
+    from . import views
+  File "/root/Documents/AutoDeployer/dashboard/views.py", line 13, in <module>
+    from .tasks import (
+  File "/root/Documents/AutoDeployer/dashboard/tasks.py", line 355
+    logger.info(
+                ^
+IndentationError: unindent does not match any outer indentation level
+2026-06-07 12:28:05,244 - ERROR - Signal handler <promise@0x7f4cfd47df90 --> <bound method Celery._autodiscover_tasks of <Celery deployflow at 0x7f4cfda02c00>>> raised: IndentationError('unindent does not match any outer indentation level', ('/root/Documents/AutoDeployer/dashboard/tasks.py', 355, 20, '       logger.info(\n', 355, -1))
+Traceback (most recent call last):
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/utils/dispatch/signal.py", line 280, in send
+    response = receiver(signal=self, sender=sender, **named)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/vine/promises.py", line 161, in __call__
+    return self.throw()
+           ^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/vine/promises.py", line 158, in __call__
+    retval = fun(*final_args, **final_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/app/base.py", line 827, in _autodiscover_tasks
+    return self._autodiscover_tasks_from_fixups(related_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/app/base.py", line 836, in _autodiscover_tasks_from_fixups
+    return self._autodiscover_tasks_from_names([
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/app/base.py", line 831, in _autodiscover_tasks_from_names
+    return self.loader.autodiscover_tasks(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/loaders/base.py", line 220, in autodiscover_tasks
+    mod.__name__ for mod in autodiscover_tasks(packages or (),
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/loaders/base.py", line 246, in autodiscover_tasks
+    return [find_related_module(pkg, related_name) for pkg in packages]
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/loaders/base.py", line 270, in find_related_module
+    return importlib.import_module(module_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 991, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1129, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1059, in source_to_code
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/Documents/AutoDeployer/dashboard/tasks.py", line 355
+    logger.info(
+                ^
+IndentationError: unindent does not match any outer indentation level
+2026-06-07 12:28:05,990 - INFO - Celery file initialized
+2026-06-07 12:28:06,254 - ERROR - Signal handler <bound method DjangoFixup.on_import_modules of <celery.fixups.django.DjangoFixup object at 0x7aa5acb0da00>> raised: IndentationError('unindent does not match any outer indentation level', ('/root/Documents/AutoDeployer/dashboard/tasks.py', 355, 20, '       logger.info(\n', 355, -1))
+Traceback (most recent call last):
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/utils/dispatch/signal.py", line 280, in send
+    response = receiver(signal=self, sender=sender, **named)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/fixups/django.py", line 103, in on_import_modules
+    self.worker_fixup.validate_models()
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/fixups/django.py", line 154, in validate_models
+    run_checks()
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/core/checks/registry.py", line 89, in run_checks
+    new_errors = check(app_configs=app_configs, databases=databases)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/core/checks/urls.py", line 16, in check_url_config
+    return check_resolver(resolver)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/core/checks/urls.py", line 26, in check_resolver
+    return check_method()
+           ^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 541, in check
+    for pattern in self.url_patterns:
+                   ^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 729, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 722, in urlconf_module
+    return import_module(self.urlconf_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/Documents/AutoDeployer/deployflow/urls.py", line 22, in <module>
+    path('', include('dashboard.urls')),
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/urls/conf.py", line 39, in include
+    urlconf_module = import_module(urlconf_module)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/Documents/AutoDeployer/dashboard/urls.py", line 2, in <module>
+    from . import views
+  File "/root/Documents/AutoDeployer/dashboard/views.py", line 13, in <module>
+    from .tasks import (
+  File "/root/Documents/AutoDeployer/dashboard/tasks.py", line 355
+    logger.info(
+                ^
+IndentationError: unindent does not match any outer indentation level
+2026-06-07 12:28:06,259 - ERROR - Signal handler <promise@0x7aa5ab27df90 --> <bound method Celery._autodiscover_tasks of <Celery deployflow at 0x7aa5ab6b2c00>>> raised: IndentationError('unindent does not match any outer indentation level', ('/root/Documents/AutoDeployer/dashboard/tasks.py', 355, 20, '       logger.info(\n', 355, -1))
+Traceback (most recent call last):
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/utils/dispatch/signal.py", line 280, in send
+    response = receiver(signal=self, sender=sender, **named)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/vine/promises.py", line 161, in __call__
+    return self.throw()
+           ^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/vine/promises.py", line 158, in __call__
+    retval = fun(*final_args, **final_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/app/base.py", line 827, in _autodiscover_tasks
+    return self._autodiscover_tasks_from_fixups(related_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/app/base.py", line 836, in _autodiscover_tasks_from_fixups
+    return self._autodiscover_tasks_from_names([
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/app/base.py", line 831, in _autodiscover_tasks_from_names
+    return self.loader.autodiscover_tasks(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/loaders/base.py", line 220, in autodiscover_tasks
+    mod.__name__ for mod in autodiscover_tasks(packages or (),
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/loaders/base.py", line 246, in autodiscover_tasks
+    return [find_related_module(pkg, related_name) for pkg in packages]
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/loaders/base.py", line 270, in find_related_module
+    return importlib.import_module(module_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 991, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1129, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1059, in source_to_code
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/Documents/AutoDeployer/dashboard/tasks.py", line 355
+    logger.info(
+                ^
+IndentationError: unindent does not match any outer indentation level
+2026-06-07 12:30:10,670 - INFO - Celery file initialized
+2026-06-07 12:30:10,954 - ERROR - Signal handler <bound method DjangoFixup.on_import_modules of <celery.fixups.django.DjangoFixup object at 0x7fa38e338aa0>> raised: IndentationError('unindent does not match any outer indentation level', ('/root/Documents/AutoDeployer/dashboard/tasks.py', 355, 20, '       logger.info(\n', 355, -1))
+Traceback (most recent call last):
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/utils/dispatch/signal.py", line 280, in send
+    response = receiver(signal=self, sender=sender, **named)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/fixups/django.py", line 103, in on_import_modules
+    self.worker_fixup.validate_models()
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/fixups/django.py", line 154, in validate_models
+    run_checks()
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/core/checks/registry.py", line 89, in run_checks
+    new_errors = check(app_configs=app_configs, databases=databases)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/core/checks/urls.py", line 16, in check_url_config
+    return check_resolver(resolver)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/core/checks/urls.py", line 26, in check_resolver
+    return check_method()
+           ^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 541, in check
+    for pattern in self.url_patterns:
+                   ^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 729, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 722, in urlconf_module
+    return import_module(self.urlconf_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/Documents/AutoDeployer/deployflow/urls.py", line 22, in <module>
+    path('', include('dashboard.urls')),
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/django/urls/conf.py", line 39, in include
+    urlconf_module = import_module(urlconf_module)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/Documents/AutoDeployer/dashboard/urls.py", line 2, in <module>
+    from . import views
+  File "/root/Documents/AutoDeployer/dashboard/views.py", line 13, in <module>
+    from .tasks import (
+  File "/root/Documents/AutoDeployer/dashboard/tasks.py", line 355
+    logger.info(
+                ^
+IndentationError: unindent does not match any outer indentation level
+2026-06-07 12:30:10,959 - ERROR - Signal handler <promise@0x7fa38de61f90 --> <bound method Celery._autodiscover_tasks of <Celery deployflow at 0x7fa38f5fac00>>> raised: IndentationError('unindent does not match any outer indentation level', ('/root/Documents/AutoDeployer/dashboard/tasks.py', 355, 20, '       logger.info(\n', 355, -1))
+Traceback (most recent call last):
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/utils/dispatch/signal.py", line 280, in send
+    response = receiver(signal=self, sender=sender, **named)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/vine/promises.py", line 161, in __call__
+    return self.throw()
+           ^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/vine/promises.py", line 158, in __call__
+    retval = fun(*final_args, **final_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/app/base.py", line 827, in _autodiscover_tasks
+    return self._autodiscover_tasks_from_fixups(related_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/app/base.py", line 836, in _autodiscover_tasks_from_fixups
+    return self._autodiscover_tasks_from_names([
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/app/base.py", line 831, in _autodiscover_tasks_from_names
+    return self.loader.autodiscover_tasks(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/loaders/base.py", line 220, in autodiscover_tasks
+    mod.__name__ for mod in autodiscover_tasks(packages or (),
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/loaders/base.py", line 246, in autodiscover_tasks
+    return [find_related_module(pkg, related_name) for pkg in packages]
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/Documents/AutoDeployer/venv/lib/python3.12/site-packages/celery/loaders/base.py", line 270, in find_related_module
+    return importlib.import_module(module_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 991, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1129, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1059, in source_to_code
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/root/Documents/AutoDeployer/dashboard/tasks.py", line 355
+    logger.info(
+                ^
+IndentationError: unindent does not match any outer indentation level
+2026-06-07 12:41:01,831 - INFO - Celery file initialized
+2026-06-07 12:41:01,958 - INFO - Celery file initialized
+2026-06-07 12:41:01,980 - INFO - Celery file initialized
+2026-06-07 12:41:07,816 - INFO - Celery file initialized
+2026-06-07 12:42:11,920 - INFO - Celery file initialized
