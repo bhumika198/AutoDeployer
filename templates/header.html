@@ -1,0 +1,154 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+ --green-dark:#0b3d2e;
+ --green:#145c41;
+ --green-soft:#2f8f67;
+ --sidebar-width:260px;
+ --navbar-height:72px;
+}
+*{font-family:'Inter',sans-serif;}
+body{margin:0;background:#fafdfb;overflow-x:hidden;}
+
+.tech-bg{position:fixed;inset:0;z-index:-10;pointer-events:none;overflow:hidden;}
+.tech-bg::before{
+ content:"";position:absolute;inset:0;
+ background:linear-gradient(135deg,#ffffff,#f5fff8,#eefaf3,#ffffff);
+ background-size:400% 400%;
+ animation:bgMove 18s ease infinite;
+}
+@keyframes bgMove{
+ 0%{background-position:0% 50%}
+ 50%{background-position:100% 50%}
+ 100%{background-position:0% 50%}
+}
+
+.tech-icon{
+ position:absolute;
+ color:var(--green-dark);
+ opacity:.03;
+ animation:pulse var(--dur) ease-in-out infinite;
+ animation-delay:var(--delay);
+}
+@keyframes pulse{
+ 0%,100%{opacity:.02;filter:blur(3px);transform:scale(.9) rotate(0deg);}
+ 50%{opacity:.22;filter:blur(0);transform:scale(1.1) rotate(6deg);}
+}
+
+.top-navbar{
+ position:fixed;top:0;left:0;right:0;height:72px;
+ background:rgba(255,255,255,.9);
+ backdrop-filter:blur(10px);
+ display:flex;justify-content:space-between;align-items:center;
+ padding:0 24px;z-index:1000;border-bottom:1px solid #eaeaea;
+}
+.logo-area{display:flex;align-items:center;gap:12px;}
+.logo-icon{
+ width:42px;height:42px;border-radius:12px;color:#fff;
+ background:linear-gradient(135deg,var(--green-dark),var(--green));
+ display:flex;align-items:center;justify-content:center;
+}
+.logo-text{font-weight:800;color:var(--green-dark);font-size:1.2rem;}
+
+.sidebar{
+ position:fixed;top:72px;left:0;width:260px;height:calc(100vh - 72px);
+ background:linear-gradient(180deg,var(--green-dark),var(--green));
+ padding:24px 16px;z-index:900;
+}
+.sidebar-link{
+ display:flex;color:#fff;text-decoration:none;padding:14px 16px;
+ border-radius:14px;margin-bottom:10px;transition:.3s;
+}
+.sidebar-link:hover{background:rgba(255,255,255,.12);transform:translateX(5px);}
+.sidebar-link.active{
+ background:#fff;color:var(--green-dark);font-weight:700;position:relative;overflow:hidden;
+}
+.sidebar-link.active:after{
+ content:"";position:absolute;top:0;left:-100%;width:100%;height:100%;
+ background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);
+ animation:shine 3s infinite;
+}
+@keyframes shine{100%{left:120%;}}
+
+.user-area{display:flex;align-items:center;gap:12px;}
+.user-avatar{
+ width:40px;height:40px;border-radius:50%;color:#fff;
+ background:linear-gradient(135deg,var(--green-dark),var(--green));
+ display:flex;align-items:center;justify-content:center;font-weight:700;
+}
+.page-content{
+ margin-left:260px;margin-top:72px;padding:40px;min-height:100vh;
+}
+@media(max-width:992px){
+ .sidebar{width:80px}
+ .page-content{margin-left:80px}
+ .sidebar-link span,.logo-text{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="tech-bg">
+<i class="fab fa-docker tech-icon" style="top:0%;left:0%;font-size:30px;--dur:5s;--delay:0s"></i>
+<i class="fab fa-git-alt tech-icon" style="top:13%;left:17%;font-size:45px;--dur:8s;--delay:1s"></i>
+<i class="fab fa-github tech-icon" style="top:26%;left:34%;font-size:60px;--dur:9s;--delay:2s"></i>
+<i class="fab fa-docker tech-icon" style="top:39%;left:51%;font-size:75px;--dur:10.5s;--delay:3s"></i>
+<i class="fab fa-git-alt tech-icon" style="top:52%;left:68%;font-size:90px;--dur:12s;--delay:4s"></i>
+<i class="fab fa-github tech-icon" style="top:65%;left:85%;font-size:30px;--dur:14s;--delay:5s"></i>
+<i class="fab fa-docker tech-icon" style="top:78%;left:7%;font-size:45px;--dur:16s;--delay:6s"></i>
+<i class="fab fa-git-alt tech-icon" style="top:91%;left:24%;font-size:60px;--dur:5s;--delay:7s"></i>
+<i class="fab fa-github tech-icon" style="top:9%;left:41%;font-size:75px;--dur:8s;--delay:8s"></i>
+<i class="fab fa-docker tech-icon" style="top:22%;left:58%;font-size:90px;--dur:9s;--delay:0s"></i>
+<i class="fab fa-git-alt tech-icon" style="top:35%;left:75%;font-size:30px;--dur:10.5s;--delay:1s"></i>
+<i class="fab fa-github tech-icon" style="top:48%;left:92%;font-size:45px;--dur:12s;--delay:2s"></i>
+<i class="fab fa-docker tech-icon" style="top:61%;left:14%;font-size:60px;--dur:14s;--delay:3s"></i>
+<i class="fab fa-git-alt tech-icon" style="top:74%;left:31%;font-size:75px;--dur:16s;--delay:4s"></i>
+<i class="fab fa-github tech-icon" style="top:87%;left:48%;font-size:90px;--dur:5s;--delay:5s"></i>
+<i class="fab fa-docker tech-icon" style="top:5%;left:65%;font-size:30px;--dur:8s;--delay:6s"></i>
+<i class="fab fa-git-alt tech-icon" style="top:18%;left:82%;font-size:45px;--dur:9s;--delay:7s"></i>
+<i class="fab fa-github tech-icon" style="top:31%;left:4%;font-size:60px;--dur:10.5s;--delay:8s"></i>
+<i class="fab fa-docker tech-icon" style="top:44%;left:21%;font-size:75px;--dur:12s;--delay:0s"></i>
+<i class="fab fa-git-alt tech-icon" style="top:57%;left:38%;font-size:90px;--dur:14s;--delay:1s"></i>
+<i class="fab fa-github tech-icon" style="top:70%;left:55%;font-size:30px;--dur:16s;--delay:2s"></i>
+<i class="fab fa-docker tech-icon" style="top:83%;left:72%;font-size:45px;--dur:5s;--delay:3s"></i>
+<i class="fab fa-git-alt tech-icon" style="top:1%;left:89%;font-size:60px;--dur:8s;--delay:4s"></i>
+<i class="fab fa-github tech-icon" style="top:14%;left:11%;font-size:75px;--dur:9s;--delay:5s"></i>
+<i class="fab fa-docker tech-icon" style="top:27%;left:28%;font-size:90px;--dur:10.5s;--delay:6s"></i>
+<i class="fab fa-git-alt tech-icon" style="top:40%;left:45%;font-size:30px;--dur:12s;--delay:7s"></i>
+<i class="fab fa-github tech-icon" style="top:53%;left:62%;font-size:45px;--dur:14s;--delay:8s"></i>
+<i class="fab fa-docker tech-icon" style="top:66%;left:79%;font-size:60px;--dur:16s;--delay:0s"></i>
+<i class="fab fa-git-alt tech-icon" style="top:79%;left:1%;font-size:75px;--dur:5s;--delay:1s"></i>
+<i class="fab fa-github tech-icon" style="top:92%;left:18%;font-size:90px;--dur:8s;--delay:2s"></i>
+
+</div>
+
+<nav class="top-navbar">
+<div class="logo-area">
+<div class="logo-icon"><i class="fab fa-docker"></i></div>
+<div class="logo-text">AutoDeployr</div>
+</div>
+
+<div class="user-area">
+<div class="user-avatar">{{ request.user.username|first|upper }}</div>
+<span>{{ request.user.username }}</span>
+<a href="{% url 'logout' %}" class="text-danger text-decoration-none fw-semibold">Logout</a>
+</div>
+</nav>
+
+<aside class="sidebar">
+<a href="{% url 'dashboard' %}" class="sidebar-link"><span>📊 Dashboard</span></a>
+<a href="{% url 'add_project' %}" class="sidebar-link"><span>➕ Add Project</span></a>
+<a href="{% url 'monitor_dashboard' %}" class="sidebar-link"><span>🖥 Monitor Projects</span></a>
+</aside>
+
+</body>
+</html>

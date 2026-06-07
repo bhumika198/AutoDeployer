@@ -16,6 +16,7 @@ from .nginx_utils import (
 )
 
 DOCKER_BIN = "/usr/bin/docker"
+NGINX_BIN="/usr/sbin/nginx"
 
 logger = logging.getLogger(__name__)
 

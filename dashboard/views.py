@@ -9,6 +9,14 @@ from .utils import get_next_available_port
 
 from django.http import JsonResponse
 
+from .monitor_utils import (
+    get_container_stats,
+    get_image_size,
+    get_container_size,
+    get_repo_size,
+    heartbeat_check
+)
+
 
 from .tasks import (
     deploy_project_task,
@@ -131,4 +139,98 @@ def delete_project(request, project_id):
     return JsonResponse({
         "status": "ok",
         "project_id": project.id
+    })
+
+
+
+@login_required
+def monitor_dashboard(request):
+
+    projects = Project.objects.filter(
+        user=request.user
+    ).exclude(
+        status="DELETING"
+    )
+
+    context = {
+        "projects": projects,
+        "total_projects": projects.count(),
+        "running_projects": projects.filter(
+            status="RUNNING"
+        ).count(),
+        "failed_projects": projects.filter(
+            status="FAILED"
+        ).count(),
+        "deploying_projects": projects.filter(
+            status__in=["DEPLOYING", "QUEUED"]
+        ).count(),
+    }
+
+    return render(
+        request,
+        "monitor_dashboard.html",
+        context
+    )
+
+
+from .monitor_utils import *
+
+@login_required
+def project_monitor_api(request, project_id):
+
+    project = get_object_or_404(
+        Project,
+        id=project_id,
+        user=request.user
+    )
+
+    base_path = (
+        f"/root/Documents/AutoDeployer/deployments/project_{project.id}"
+    )
+
+    stats = {}
+
+    if project.container_name:
+
+        stats = get_container_stats(
+            project.container_name
+        )
+
+    return JsonResponse({
+
+        "name": project.name,
+        "status": project.status,
+
+        "cpu": stats.get(
+            "cpu",
+            "0%"
+        ),
+
+        "memory": stats.get(
+            "memory",
+            "0MB"
+        ),
+
+        "memory_percent": stats.get(
+            "memory_percent",
+            "0%"
+        ),
+
+        "repo_size": get_repo_size(base_path),
+
+        "image_size":
+            get_image_size(project.image_name)
+            if project.image_name
+            else "N/A",
+
+        "container_size":
+            get_container_size(project.container_name)
+            if project.container_name
+            else "N/A",
+
+        "heartbeat":
+            heartbeat_check(project.container_name)
+            if project.container_name
+            else False
+
     })

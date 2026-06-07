@@ -5,7 +5,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 NGINX_PATH = "/etc/nginx/conf.d"
-
+NGINX_BIN="/usr/sbin/nginx"
 
 def generate_nginx_config(project):
     """
@@ -48,7 +48,7 @@ def test_nginx():
     logger.info("[NGINX] Testing configuration")
 
     result = subprocess.run(
-        ["nginx", "-t"],
+        ["/usr/sbin/nginx", "-t"],
         capture_output=True,
         text=True
     )
@@ -68,7 +68,7 @@ def reload_nginx():
     logger.info("[NGINX] Reloading nginx")
 
     result = subprocess.run(
-        ["systemctl", "reload", "nginx"],
+        ["systemctl", "reload", "/usr/sbin/nginx"],
         capture_output=True,
         text=True
     )
