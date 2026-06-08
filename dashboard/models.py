@@ -61,7 +61,11 @@ class Project(models.Model):
         blank=True,
         null=True
     )
-
+    
+    last_deployed_at = models.DateTimeField(
+    null=True,
+    blank=True
+    )
     status = models.CharField(
         max_length=20,
         choices=STATUS_CHOICES,

@@ -15,9 +15,11 @@ from .monitor_utils import (
     get_image_size,
     get_container_size,
     get_repo_size,
-    heartbeat_check
+    heartbeat_check,
+    get_container_uptime
 )
 
+from .monitor_utils import get_container_uptime
 
 from .tasks import (
     deploy_project_task,
@@ -150,6 +152,23 @@ def monitor_dashboard(request):
         status="DELETING"
     )
 
+    # Add extra monitoring fields
+    for project in projects:
+
+        # Deployment timestamp
+        project.deployment_timestamp = (
+            project.created_at.strftime("%d %b %Y %I:%M %p")
+            if project.created_at else "N/A"
+        )
+
+        # Container uptime
+        if project.container_name:
+            project.container_uptime = get_container_uptime(
+                project.container_name
+            )
+        else:
+            project.container_uptime = "N/A"
+
     context = {
         "projects": projects,
         "total_projects": projects.count(),
@@ -169,7 +188,6 @@ def monitor_dashboard(request):
         "monitor_dashboard.html",
         context
     )
-
 
 from .monitor_utils import *
 

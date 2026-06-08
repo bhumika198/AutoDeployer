@@ -258,10 +258,19 @@
                         </div>
 
                         <div class="col-md-6">
-                            <p><strong>Port:</strong> {{ project.host_port|default:"N/A" }}</p>
-                            <p><strong>Route:</strong> {{ project.route_name|default:"N/A" }}</p>
+                             <p><strong>Route:</strong> {{ project.route_name|default:"N/A" }}</p>
                         </div>
 
+                          <p>
+                            <strong>Deployment Time:</strong>
+                            {{ project.created_at|date:"d M Y H:i" }}
+                        </p>
+
+                        <p>
+                            <strong>Container Uptime:</strong>
+                            {{ project.container_uptime }}
+                        </p>
+                            
                     </div>
 
                     <div class="mt-3">

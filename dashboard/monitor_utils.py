@@ -116,3 +116,44 @@ def heartbeat_check(container_name):
     out, _ = run_cmd(cmd)
 
     return out.strip() == "true"
+
+import subprocess
+
+
+from datetime import datetime, timezone
+import subprocess
+
+
+def get_container_uptime(container_name):
+
+    try:
+
+        started_at = subprocess.check_output(
+            [
+                "docker",
+                "inspect",
+                "-f",
+                "{{.State.StartedAt}}",
+                container_name
+            ]
+        ).decode().strip()
+
+        started = datetime.fromisoformat(
+            started_at.replace("Z", "+00:00")
+        )
+
+        now = datetime.now(timezone.utc)
+
+        uptime = now - started
+
+        days = uptime.days
+        hours = uptime.seconds // 3600
+        minutes = (uptime.seconds % 3600) // 60
+
+        return f"{days}d {hours}h {minutes}m"
+
+    except Exception as e:
+
+        print(f"[UPTIME ERROR] {e}")
+
+        return "N/A"

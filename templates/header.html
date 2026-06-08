@@ -140,7 +140,6 @@ body{margin:0;background:#fafdfb;overflow-x:hidden;}
 <div class="user-area">
 <div class="user-avatar">{{ request.user.username|first|upper }}</div>
 <span>{{ request.user.username }}</span>
-<a href="{% url 'logout' %}" class="text-danger text-decoration-none fw-semibold">Logout</a>
 </div>
 </nav>
 
@@ -148,6 +147,7 @@ body{margin:0;background:#fafdfb;overflow-x:hidden;}
 <a href="{% url 'dashboard' %}" class="sidebar-link"><span>📊 Dashboard</span></a>
 <a href="{% url 'add_project' %}" class="sidebar-link"><span>➕ Add Project</span></a>
 <a href="{% url 'monitor_dashboard' %}" class="sidebar-link"><span>🖥 Monitor Projects</span></a>
+<a href="{% url 'logout' %}" class="sidebar-link"><span><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</span></a>
 </aside>
 
 </body>
