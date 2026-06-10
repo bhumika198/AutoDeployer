@@ -56,6 +56,8 @@
             border-radius: 18px;
             transition: .25s;
             color: #1e293b; /* Clean contrast inside cards */
+            box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+            position: relative;
         }
 
         .project-card:hover {
@@ -85,7 +87,29 @@
             overflow: auto;
             white-space: pre-wrap;
         }
+        
 
+        /* TOP RIGHT ICON AREA */
+        .card-actions{
+            position: absolute;
+            top: 12px;
+            right: 12px;
+        }
+
+        /* BIN ICON STYLE */
+        .delete-icon{
+            color: #dc3545;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: 0.2s ease;
+        }
+
+        .delete-icon:hover{
+            background: rgba(220,53,69,0.1);
+            transform: scale(1.1);
+        }
         .modal-content {
             background: #102417;
             color: white;
@@ -142,7 +166,6 @@
 </head>
 
 <body class="main-content">
-
 <div class="dashboard-bg-matrix">
     <div class="bg-white-zone"></div>
     <div class="bg-green-zone"></div>
@@ -215,6 +238,13 @@
             <div id="project-card-{{ project.id }}" class="card project-card h-100">
 
                 <div class="card-body">
+                    <div class="card-actions">
+                        <i class="fa-solid fa-trash delete-icon" data-bs-toggle="tooltip"
+                            data-bs-placement="top" title="Delete this project"
+                        onclick="openDeleteModal({{ project.id }}, '{{ project.name|escapejs }}')">
+                        </i>
+                        
+                    </div>
 
                     <h4>{{ project.name }}</h4>
 
@@ -268,11 +298,8 @@
                     <div class="mb-3">
 
                         <a href="{{ project.deployed_url }}"
-                           target="_blank"
-                           class="btn btn-outline-dark btn-sm">
-
-                            Open Project
-
+                           target="_blank">
+                            Go to Project  <i class="fas fa-external-link-alt"></i>
                         </a>
 
 
@@ -314,17 +341,6 @@
                         onclick="openDeploymentModal({{ project.id }})">
 
                         View Deployment
-
-                    </button>
-
-                    <button
-                        class="btn btn-danger"
-                        onclick="openDeleteModal(
-                            {{ project.id }},
-                            '{{ project.name|escapejs }}'
-                        )">
-
-                        Delete Project
 
                     </button>
                 
@@ -573,7 +589,12 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
+<script>
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})
+</script>
 <script>
 
 let deploymentModal =
@@ -772,6 +793,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 1400);
 });
 </script>
-
 </body>
 </html>

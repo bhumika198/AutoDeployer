@@ -1,0 +1,16 @@
+<form method="POST">
+    {% csrf_token %}
+
+    <input
+        type="text"
+        name="otp"
+        class="form-control"
+        placeholder="Enter OTP"
+    >
+
+    <button
+        class="btn btn-primary mt-3">
+        Verify
+    </button>
+
+</form>
