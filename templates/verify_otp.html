@@ -1,16 +1,51 @@
-<form method="POST">
-    {% csrf_token %}
+<div class="modal fade"
+     id="otpModal"
+     tabindex="-1">
 
-    <input
-        type="text"
-        name="otp"
-        class="form-control"
-        placeholder="Enter OTP"
-    >
+    <div class="modal-dialog modal-dialog-centered">
 
-    <button
-        class="btn btn-primary mt-3">
-        Verify
-    </button>
+        <div class="modal-content">
 
-</form>
+            <div class="modal-header">
+
+                <h5 class="modal-title">
+                    Verify Email
+                </h5>
+
+            </div>
+
+            <form method="POST"
+                  action="{% url 'verify_otp' %}">
+
+                {% csrf_token %}
+
+                <div class="modal-body">
+
+                    <input
+                        type="text"
+                        maxlength="6"
+                        name="otp"
+                        class="form-control"
+                        placeholder="Enter OTP">
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button
+                        type="submit"
+                        class="btn btn-success">
+
+                        Verify OTP
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

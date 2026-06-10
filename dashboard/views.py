@@ -9,6 +9,11 @@ from .utils import get_next_available_port
 from .tasks import deploy_project_task
 from .utils import get_next_available_port
 from django.http import JsonResponse
+import random
+
+from django.core.mail import send_mail
+
+from .models import EmailOTP
 
 from .monitor_utils import (
     get_container_stats,
@@ -45,19 +50,98 @@ def dashboard(request):
     )
 
 def signup_view(request):
-
+    show_otp_modal = False
     if request.method == 'POST':
 
         form = SignupForm(request.POST)
 
         if form.is_valid():
-            form.save()
-            return redirect('login')
+            email = form.cleaned_data["email"]
+            username = form.cleaned_data["username"]
+            password = form.cleaned_data["password1"]
+
+            request.session["register_data"] = {
+                "email": email,
+                "username": username,
+                "password": password,
+            }
+
+            send_otp(email)
+
+            show_otp_modal = True
 
     else:
         form = SignupForm()
 
-    return render(request, 'signup.html', {'form': form})
+    return render(
+        request,
+        "signup.html",
+        {
+            "form": form,
+            "show_otp_modal": show_otp_modal
+        }
+    )          
+
+from django.contrib.auth import get_user_model
+from django.contrib import messages
+
+User = get_user_model()
+
+def verify_otp(request):
+
+    if request.method == "POST":
+
+        entered_otp = request.POST.get("otp")
+
+        data = request.session.get("register_data")
+
+        if not data:
+
+            messages.error(
+                request,
+                "Session expired. Please register again."
+            )
+
+            return redirect("signup")
+
+        email = data["email"]
+
+        otp_record = EmailOTP.objects.filter(
+            email=email,
+            otp=entered_otp
+        ).first()
+
+        if otp_record:
+
+            User.objects.create_user(
+                username=data["username"],
+                email=email,
+                password=data["password"]
+            )
+
+            otp_record.delete()
+
+            request.session.pop(
+                "register_data",
+                None
+            )
+
+            messages.success(
+                request,
+                "Registration successful."
+            )
+
+            return redirect("login")
+
+        messages.error(
+            request,
+            "Invalid OTP"
+        )
+
+        return redirect("signup")
+
+    return redirect("signup")
+    
 
 @login_required
 def add_project(request):
@@ -86,6 +170,24 @@ def add_project(request):
         request,
         'add_project.html',
         {'form': form}
+    )
+
+def send_otp(email):
+
+    otp = str(random.randint(100000, 999999))
+
+    EmailOTP.objects.update_or_create(
+        email=email,
+        defaults={
+            "otp": otp
+        }
+    )
+
+    send_mail(
+        subject="AutoDeployr Email Verification",
+        message=f"Your OTP is {otp}",
+        from_email=None,
+        recipient_list=[email]
     )
 
 @login_required
