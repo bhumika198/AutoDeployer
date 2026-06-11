@@ -65,7 +65,22 @@ def signup_view(request):
                 "username": username,
                 "password": password,
             }
+            User = get_user_model()
 
+            if User.objects.filter(email=email).exists():
+
+                form.add_error(
+                    "email",
+                    "An account with this email already exists."
+                )
+
+                return render(
+                    request,
+                    "signup.html",
+                    {
+                        "form": form
+                    }
+                )
             send_otp(email)
 
             show_otp_modal = True

@@ -138,13 +138,76 @@ body{
         <a href="{% url 'signup' %}" class="btn btn-green">Sign Up</a>
     </div>
 </nav>
+{% if messages %}
+<div class="message-container">
+
+    {% for message in messages %}
+
+        <div class="alert
+            {% if message.tags == 'success' %}
+                alert-success
+            {% elif message.tags == 'error' %}
+                alert-danger
+            {% elif message.tags == 'warning' %}
+                alert-warning
+            {% else %}
+                alert-info
+            {% endif %}
+            alert-dismissible fade show">
+
+            {% if message.tags == 'success' %}
+                <i class="fa fa-check-circle me-2"></i>
+            {% elif message.tags == 'error' %}
+                <i class="fa fa-exclamation-circle me-2"></i>
+            {% endif %}
+
+            {{ message }}
+
+            <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert">
+            </button>
+
+        </div>
+
+    {% endfor %}
+
+</div>
+{% endif %}
 <div class="bg d-flex justify-content-center align-items-center" style="height:90vh;">
 
     <div class="signup-card">
 
         <h2 class="title">Create Account</h2>
         <p class="subtitle">Start deploying with AutoDeployr</p>
+{% if form.errors %}
+<div class="alert alert-danger shadow-sm">
 
+    {% for field in form %}
+
+        {% for error in field.errors %}
+
+            <div>
+                <i class="fa fa-exclamation-circle"></i>
+                {{ error }}
+            </div>
+
+        {% endfor %}
+
+    {% endfor %}
+
+    {% for error in form.non_field_errors %}
+
+        <div>
+            <i class="fa fa-exclamation-circle"></i>
+            {{ error }}
+        </div>
+
+    {% endfor %}
+
+</div>
+{% endif %}
         <form method="POST">
             {% csrf_token %}
 

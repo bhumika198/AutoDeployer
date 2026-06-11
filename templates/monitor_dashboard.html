@@ -259,17 +259,9 @@
 
                         <div class="col-md-6">
                              <p><strong>Route:</strong> {{ project.route_name|default:"N/A" }}</p>
+                             <p><strong>Container Uptime:</strong>{{ project.container_uptime }}</p>
+                             <p><strong>Deployment Time:</strong>{{ project.created_at|date:"d M Y H:i" }}</p>
                         </div>
-
-                          <p>
-                            <strong>Deployment Time:</strong>
-                            {{ project.created_at|date:"d M Y H:i" }}
-                        </p>
-
-                        <p>
-                            <strong>Container Uptime:</strong>
-                            {{ project.container_uptime }}
-                        </p>
                             
                     </div>
 
